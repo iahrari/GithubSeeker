@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_main"
+            app:startDestination="@id/mainFragment">
+
+    <fragment
+            android:id="@+id/mainFragment"
+            android:name="com.example.retrofitproject.MainFragment"
+            android:label="fragment_main"
+            tools:layout="@layout/fragment_main">
+        <action
+                android:id="@+id/action_mainFragment_to_repoFragment"
+                app:destination="@id/repoFragment"/>
+        </fragment>
+    <fragment
+            android:id="@+id/repoFragment"
+            android:name="com.example.retrofitproject.RepoFragment"
+            android:label="fragment_repo"
+            tools:layout="@layout/fragment_repo">
+        <argument
+                android:name="repo"
+                app:argType="com.example.retrofitproject.Repo"/>
+        <action
+                android:id="@+id/action_repoFragment_to_filesFragment"
+                app:destination="@id/filesFragment"/>
+        <action android:id="@+id/action_repoFragment_to_contentFragment" app:destination="@id/contentFragment"/>
+
+    </fragment>
+    <fragment
+            android:id="@+id/filesFragment"
+            android:name="com.example.retrofitproject.FilesFragment"
+            android:label="FilesFragment">
+        <argument
+                android:name="title"
+                app:argType="string" />
+
+        <argument
+            android:name="path"
+            app:argType="string"/>
+        <action android:id="@+id/action_filesFragment_self" app:destination="@id/filesFragment"/>
+        <action android:id="@+id/action_filesFragment_to_contentFragment" app:destination="@id/contentFragment"/>
+    </fragment>
+    <fragment android:id="@+id/contentFragment"
+              android:name="com.example.retrofitproject.ContentFragment"
+              android:label="fragment_content"
+              tools:layout="@layout/fragment_content">
+        <argument
+            android:name="content"
+            app:argType="com.example.retrofitproject.Content"/>
+    </fragment>
+</navigation>

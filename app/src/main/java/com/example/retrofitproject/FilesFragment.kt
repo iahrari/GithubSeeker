@@ -1,0 +1,57 @@
+package com.example.retrofitproject
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_files.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+
+class FilesFragment : Fragment() {
+    private lateinit var adapter: ContentListAdapter
+    private lateinit var url: String
+    private val job = Job()
+    private val scope = CoroutineScope(Dispatchers.Main + job)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val args by navArgs<FilesFragmentArgs>()
+        activity?.findViewById<TextView>(R.id.header_title)?.text = args.title
+        url = args.path
+
+        return inflater.inflate(R.layout.fragment_files, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        scope.launch {
+            adapter = ContentListAdapter(false)
+            content_recycler.addItemDecoration(MiddleDividerItemDecoration(context!!, MiddleDividerItemDecoration.VERTICAL, 59))
+            content_recycler.adapter = adapter
+            getContents()
+        }
+    }
+
+    private fun getContents(){
+        scope.launch {
+            try {
+                val response = client.getContents(context!!.getToken()!!, url)
+                if (response.isSuccessful)
+                    adapter.submitList(response.body() as MutableList)
+                else
+                    context!!.processResponseCode(response.code())
+            } catch (t: Throwable){
+                Toast.makeText(context!!, t.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+}
