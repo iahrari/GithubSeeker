@@ -22,6 +22,7 @@ fun Context.processResponseCode(code: Int){
 }
 
 fun Uri.downloadFromUri(context: Context, name: String, path: String) {
+    //TODO: add Runtime Permission
     val rm = DownloadManager.Request(this)
     rm.apply {
         addRequestHeader("Authorization", context.getToken())
@@ -43,7 +44,8 @@ fun Context.getAuthorizeCode() {
     )
 }
 
-fun String.endsWith(prefix: String, comma: Int): Boolean{
+@Suppress("UNUSED_PARAMETER")
+fun String.endsWith(prefix: String, comma: Int): Boolean {
     for (value in prefix.split(","))
         if (this.endsWith(value))
             return true

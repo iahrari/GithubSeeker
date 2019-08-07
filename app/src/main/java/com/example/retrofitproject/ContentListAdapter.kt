@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.content_item.view.*
 
 class ContentListAdapter(private val isRepo: Boolean): ListAdapter<Content, ContentListAdapter.CLAHolder>(MDiffUtil()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CLAHolder {
-        return CLAHolder(LayoutInflater.from(parent.context).inflate(R.layout.content_item, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CLAHolder =
+        CLAHolder.from(parent, R.layout.content_item, isRepo)
+
 
     //Override submitLists to sort list when submitting lists
     override fun submitList(list: MutableList<Content>?) {
@@ -39,7 +39,8 @@ class ContentListAdapter(private val isRepo: Boolean): ListAdapter<Content, Cont
         holder.bindView(getItem(position))
     }
 
-    inner class CLAHolder(private val view: View) : RecyclerView.ViewHolder(view){
+    class CLAHolder(private val view: View, private val isRepo: Boolean) : RecyclerView.ViewHolder(view){
+
         fun bindView(data: Content){
              if(data.type == "dir")
                 bindViewsForDirectory(data)
@@ -91,6 +92,11 @@ class ContentListAdapter(private val isRepo: Boolean): ListAdapter<Content, Cont
 
                 view.findNavController().navigate(nav)
             }
+        }
+
+        companion object {
+            fun from(parent: ViewGroup, layout: Int, isRepo: Boolean): CLAHolder =
+                CLAHolder(LayoutInflater.from(parent.context).inflate(layout, parent, false), isRepo)
         }
     }
 

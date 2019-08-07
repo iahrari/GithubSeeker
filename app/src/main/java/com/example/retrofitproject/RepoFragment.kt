@@ -1,4 +1,5 @@
 package com.example.retrofitproject
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,21 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_repo.*
-import kotlinx.android.synthetic.main.recycler_item.view.*
-import kotlinx.android.synthetic.main.recycler_item.view.repo_name
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class RepoFragment : Fragment() {
-    lateinit var repo: Repo
-    lateinit var adapter: ContentListAdapter
+    private lateinit var repo: Repo
+    private lateinit var adapter: ContentListAdapter
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.Main + job)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,12 +55,13 @@ class RepoFragment : Fragment() {
                         "Kotlin" -> R.drawable.ic_kotlin
                         "Java" -> R.drawable.ic_java
                         "Go" -> R.drawable.ic_go
-                        else -> android.R.drawable.stat_notify_error
+                        else -> R.drawable.ic_github
                     }
                 )
             else
                 repo_lang_logo.setImageResource(android.R.drawable.stat_notify_error)
 
+            repo_owner.text = "Owner: ${repo.owner.username}"
             repo_html_url.text = "URL: ${repo.hURL}"
             repo_clone_url.text = "Clone URL: ${repo.cloneURL}"
             repo_git_url.text = "Git URL: ${repo.gitURl}"

@@ -16,8 +16,7 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning"
             tools:targetApi="n" android:fullBackupContent="true">
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".LoginActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
