@@ -1,10 +1,21 @@
 <resources>
     <string name="app_name">Retrofit Project</string>
-    <string name="repo_lang_logo_description">The logo of programming language witch this project used</string>
+    <string name="repo_lang_logo_description">The logo of programming language which this project used</string>
     <string name="github_seeker">Github Seeker</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="client_avatar_logo">Client avatar logo</string>
     <string name="download">Download!</string>
+    <string name="username">Username: </string>
+    <string name="owner">Owner:</string>
+    <string name="clone_url">Clone URL:</string>
+    <string name="git_url">Git URL:</string>
+    <string name="ssh_url">SSH URL:</string>
+    <string name="contains">Contains:</string>
+    <string name="files">files</string>
+    <string name="dir">dir</string>
+    <string name="name">Name: </string>
+    <string name="blog">Blog: </string>
+    <string name="url">URL: </string>
 </resources>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable name="repo" type="com.example.retrofitproject.Repo"/>
+    </data>
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
@@ -24,6 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/repo_name"
+                android:drawableStart="@{(safeUnbox(repo.private))? @drawable/ic_locked: null}"
+                android:text="@{repo.name}"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="@color/titleColor"
@@ -33,6 +37,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{repo.language}"
                 android:id="@+id/repo_language"
                 android:textColor="@color/titleColor"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
@@ -42,9 +47,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/repo_description"
+                android:text="@{repo.description}"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/titleColor"
                 tools:text="This Project is Based On WarensDorf's rule"/>
     </LinearLayout>
-<!--</androidx.cardview.widget.CardView>-->
+</layout>

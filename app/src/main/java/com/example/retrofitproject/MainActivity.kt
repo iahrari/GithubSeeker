@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.example.retrofitproject.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +20,10 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.Main + job)
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         getUser()
@@ -37,13 +37,13 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean =
         navigateUp(
             findNavController(R.id.nav_host_fragment),
-            findViewById<DrawerLayout>(R.id.drawer_layout)
+            binding.drawerLayout
         )
 
     private fun setupNavigation() {
         val navController = findNavController(R.id.nav_host_fragment)
-        setSupportActionBar(toolbar)
-        setupActionBarWithNavController(navController, drawer_layout)
+        setSupportActionBar(binding.toolbar)
+        setupActionBarWithNavController(navController, binding.drawerLayout)
         navigation.setupWithNavController(navController)
     }
 
@@ -64,15 +64,16 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setUpUserView(user: User?){
-        name.text = "Username: ${user?.username}"
-        username.text = "Name: ${user?.name}"
-        url.text = "URL: ${user?.url}"
-        blog.text = "Blog: ${user?.blog}"
+//        name.text = "Username: ${user?.username}"
+//        username.text = "Name: ${user?.name}"
+//        url.text = "URL: ${user?.url}"
+//        blog.text = "Blog: ${user?.blog}"
+        binding.user = user
 
         if(user!!.avatar != null)
-            Glide.with(this).load(user.avatar).into(avatar)
+            Glide.with(this).load(user.avatar).into(binding.avatar)
         else if(user.gravatar != null)
-            Glide.with(this).load(user.gravatar).into(avatar)
+            Glide.with(this).load(user.gravatar).into(binding.avatar)
 
     }
 }

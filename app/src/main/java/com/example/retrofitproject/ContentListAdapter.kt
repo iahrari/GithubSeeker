@@ -3,20 +3,21 @@ package com.example.retrofitproject
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.content_item.view.*
+import com.example.retrofitproject.databinding.ContentItemBinding
 
-class ContentListAdapter(private val isRepo: Boolean): ListAdapter<Content, ContentListAdapter.CLAHolder>(MDiffUtil()) {
+class ContentListAdapter(private val isRepo: Boolean) :
+    ListAdapter<Content, ContentListAdapter.CLAHolder>(MDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CLAHolder =
         CLAHolder.from(parent, R.layout.content_item, isRepo)
 
-
-    //Override submitLists to sort list when submitting lists
+    //Override submitList to sort list when submitting lists
     override fun submitList(list: MutableList<Content>?) {
         list!!.sortWith(
             Comparator { o1, o2 ->
@@ -39,64 +40,53 @@ class ContentListAdapter(private val isRepo: Boolean): ListAdapter<Content, Cont
         holder.bindView(getItem(position))
     }
 
-    class CLAHolder(private val view: View, private val isRepo: Boolean) : RecyclerView.ViewHolder(view){
+    class CLAHolder(private val binding: ContentItemBinding, private val isRepo: Boolean) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bindView(data: Content){
-             if(data.type == "dir")
+        fun bindView(data: Content) {
+            binding.content = data
+            val nav = if (data.type == "dir")
                 bindViewsForDirectory(data)
-             else
-                 bindViewsForFile(data)
+            else
+                bindViewsForFile(data)
 
-            view.content_name.text = data.name
-            view.content_size.text = prepareFileSize(data.size)
+            binding.root.setOnClickListener {
+                binding.root.findNavController().navigate(nav)
+            }
         }
 
-        private fun bindViewsForDirectory(data: Content){
-                //Hide file's attributes
-                view.content_size.visibility = View.GONE
-                view.content_type_icon.setImageResource(R.drawable.ic_folder)
-                view.download_button.visibility = View.GONE
-
-                //Open Directory
-                view.setOnClickListener {
-                    val nav =
-                        if (isRepo)
-                            RepoFragmentDirections.actionRepoFragmentToFilesFragment(data.name, data.url!!)
-                        else
-                            FilesFragmentDirections.actionFilesFragmentSelf(data.name, data.url!!)
-
-                    view.findNavController().navigate(nav)
-                }
+        private fun bindViewsForDirectory(data: Content): NavDirections {
+            //Open Directory
+            return if (isRepo)
+                RepoFragmentDirections.actionRepoFragmentToFilesFragment(data.name, data.url!!)
+            else
+                FilesFragmentDirections.actionFilesFragmentSelf(data.name, data.url!!)
         }
 
-        private fun bindViewsForFile(data: Content){
-            view.content_size.visibility = View.VISIBLE
-            view.content_type_icon.setImageResource(R.drawable.ic_file)
-            view.download_button.visibility = View.VISIBLE
-            view.download_button.setOnClickListener {
+        private fun bindViewsForFile(data: Content): NavDirections {
+            binding.downloadButton.setOnClickListener {
                 Uri.parse(data.downloadURl)
                     .downloadFromUri(
-                        view.context,
+                        binding.root.context,
                         data.name,
                         data.hUrl.split("github.com/")[1]
                     )
             }
 
             //Open file with github built in mark down for documents
-            view.setOnClickListener {
-                val nav =
-                    if (isRepo)
-                        RepoFragmentDirections.actionRepoFragmentToContentFragment(data)
-                    else
-                        FilesFragmentDirections.actionFilesFragmentToContentFragment(data)
+            return if (isRepo)
+                RepoFragmentDirections.actionRepoFragmentToContentFragment(data)
+            else
+                FilesFragmentDirections.actionFilesFragmentToContentFragment(data)
 
-                view.findNavController().navigate(nav)
-            }
         }
 
         companion object {
             fun from(parent: ViewGroup, layout: Int, isRepo: Boolean): CLAHolder =
-                CLAHolder(LayoutInflater.from(parent.context).inflate(layout, parent, false), isRepo)
+                CLAHolder(
+                    DataBindingUtil.inflate(LayoutInflater.from(parent.context), layout, parent, false),
+                    isRepo
+                )
         }
     }
 

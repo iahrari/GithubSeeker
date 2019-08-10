@@ -25,6 +25,8 @@ data class Content(
         parcel.readString()
     )
 
+    val dir = "dir"
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(path)
