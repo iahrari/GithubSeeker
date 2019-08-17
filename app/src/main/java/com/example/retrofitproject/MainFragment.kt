@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,14 +15,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
-    private val job = Job()
-    private val scope = CoroutineScope(Dispatchers.Main + job)
     private lateinit var adapter: ListAdapter
-
+    private lateinit var viewModel: MainFViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProviders.of(this, MainFViewModel.Factory(context!!)).get(MainFViewModel::class.java)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
@@ -31,27 +32,7 @@ class MainFragment : Fragment() {
 
         adapter = ListAdapter()
         recycler.adapter = adapter
-        getRepos(context!!.getToken()!!)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
-    }
-
-    private fun getRepos(accessToken: String) {
-        scope.launch {
-            try {
-                val response = client.getReposAsync(accessToken)
-
-                if (response.isSuccessful) {
-                    adapter.submitList(response.body())
-                } else
-                    context!!.processResponseCode(response.code())
-
-            } catch (t: Throwable) {
-                Log.i("logRepoProblemCatch", t.message)
-            }
-        }
+        viewModel.reposList.observe(this, Observer<List<Repo>> { adapter.submitList(it) })
     }
 }

@@ -25,11 +25,11 @@ import kotlinx.coroutines.*
 import java.nio.charset.StandardCharsets
 
 class ContentFragment : Fragment() {
-
+    //TODO: Add ViewModel for this fragment
     enum class ContentType{
         Markdown, Image, Code
     }
-
+//Todo: delete this todo
     private lateinit var type: ContentType
     private val job = Job()
     private lateinit var content: Content

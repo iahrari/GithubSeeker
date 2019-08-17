@@ -7,14 +7,15 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+//import android.graphics.PorterDuff
+//import android.graphics.PorterDuffColorFilter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.roundToInt
 
 /**
  * MiddleDividerItemDecoration is a [RecyclerView.ItemDecoration] that can be used as a divider
- * between items of a [LinearLayoutManager]. It supports both [.HORIZONTAL] and
+ * between items of a [LinearLayoutManager. It supports both [.HORIZONTAL] and
  * [.VERTICAL] orientations.
  * It can also supports [.ALL], included both the horizontal and vertical. Mainly used for GridLayout.
  * <pre>
@@ -25,10 +26,12 @@ import androidx.recyclerview.widget.RecyclerView
  * recyclerView.addItemDecoration(mItemDecoration);
 </pre> *
  */
+
+//TODO: Add rtl support to this item decoration
 class MiddleDividerItemDecoration
 /**
  * Creates a divider [RecyclerView.ItemDecoration] that can be used with a
- * [LinearLayoutManager].
+ * [LinearLayoutManager.
  *
  * @param context Current context, it will be used to access resources.
  * @param orientation Divider orientation. Should be [.HORIZONTAL] or [.VERTICAL].
@@ -58,25 +61,23 @@ class MiddleDividerItemDecoration
         setOrientation(orientation)
     }
 
-    fun setDividerColor(color: Int) {
-        mDivider!!.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-    }
+//    fun setDividerColor(color: Int) {
+//        mDivider!!.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+//    }
 
-    fun setOrientation(orientation: Int) {
+    private fun setOrientation(orientation: Int) {
         if (orientation != HORIZONTAL && orientation != VERTICAL && orientation != ALL) {
-            throw IllegalArgumentException(
-                "Invalid orientation. It should be either HORIZONTAL or VERTICAL"
-            )
+            throw IllegalArgumentException("Invalid orientation. It should be either HORIZONTAL or VERTICAL")
         }
         mOrientation = orientation
     }
 
-    fun setDrawable(drawable: Drawable?) {
-        if (drawable == null) {
-            throw IllegalArgumentException("Drawable cannot be null.")
-        }
-        mDivider = drawable
-    }
+//    fun setDrawable(drawable: Drawable?) {
+//        if (drawable == null) {
+//            throw IllegalArgumentException("Drawable cannot be null.")
+//        }
+//        mDivider = drawable
+//    }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         if (parent.layoutManager == null || mDivider == null) {
@@ -123,11 +124,12 @@ class MiddleDividerItemDecoration
         for (i in 0 until childCount - 1) {
             val child = parent.getChildAt(i) ?: return
             parent.getDecoratedBoundsWithMargins(child, mBounds)
-            val bottom = mBounds.bottom + Math.round(child.translationY)
+            val bottom = mBounds.bottom + child.translationY.roundToInt()
             val top = bottom - mDivider!!.intrinsicHeight
             mDivider!!.setBounds(left, top, right, bottom)
             mDivider!!.draw(canvas)
         }
+
         canvas.restore()
     }
 
@@ -156,7 +158,7 @@ class MiddleDividerItemDecoration
         for (i in 0 until childCount - 1) {
             val child = parent.getChildAt(i) ?: return
             parent.layoutManager!!.getDecoratedBoundsWithMargins(child, mBounds)
-            val right = mBounds.right + Math.round(child.translationX)
+            val right = mBounds.right + child.translationX.roundToInt()
             val left = right - mDivider!!.intrinsicWidth
             mDivider!!.setBounds(left, top, right, bottom)
             mDivider!!.draw(canvas)
@@ -180,12 +182,12 @@ class MiddleDividerItemDecoration
     }
 
     companion object {
-        val HORIZONTAL = LinearLayout.HORIZONTAL
-        val VERTICAL = LinearLayout.VERTICAL
+        const val HORIZONTAL = LinearLayout.HORIZONTAL
+        const val VERTICAL = LinearLayout.VERTICAL
         //mainly used for GridLayoutManager
-        val ALL = 2
+        const val ALL = 2
 
-        private val TAG = "DividerItem"
+        private const val TAG = "DividerItem"
         private val ATTRS = intArrayOf(android.R.attr.listDivider)
     }
 }

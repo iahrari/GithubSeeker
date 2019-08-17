@@ -28,17 +28,7 @@ class ListAdapter : ListAdapter<Repo, MVHolder>(MDiffUtil()) {
                 binding.root.findNavController().navigate(MainFragmentDirections.actionMainFragmentToRepoFragment(data))
             }
 
-            if (data.language != null)
-                binding.repoLangLogo.setImageResource(
-                    when (data.language) {
-                        "Kotlin" -> R.drawable.ic_kotlin
-                        "Java" -> R.drawable.ic_java
-                        "Go" -> R.drawable.ic_go
-                        else -> android.R.drawable.stat_notify_error
-                    }
-                )
-            else
-                binding.repoLangLogo.setImageResource(android.R.drawable.stat_notify_error)
+            binding.repoLangLogo.setLanguageLogo(data.language)
         }
 
         companion object{

@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,20 +21,20 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private val job = Job()
-    private val scope = CoroutineScope(Dispatchers.Main + job)
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainAViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        getUser()
+        viewModel = ViewModelProviders.of(this, MainAViewModel.Factory(this)).get(MainAViewModel::class.java)
+        setObservers()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
+    private fun setObservers() {
+        viewModel.userData.observe(this, Observer<User> { t -> setUpUserView(t) })
     }
 
     override fun onSupportNavigateUp(): Boolean =
@@ -47,27 +50,8 @@ class MainActivity : AppCompatActivity() {
         navigation.setupWithNavController(navController)
     }
 
-    private fun getUser() {
-        scope.launch {
-            try {
-                val response = client.getUserDetail(getToken()!!)
-                if (response.isSuccessful)
-                    setUpUserView(response.body())
-                else
-                    processResponseCode(response.code())
-
-            } catch (t: Throwable) {
-                Toast.makeText(this@MainActivity, t.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
     @SuppressLint("SetTextI18n")
     private fun setUpUserView(user: User?){
-//        name.text = "Username: ${user?.username}"
-//        username.text = "Name: ${user?.name}"
-//        url.text = "URL: ${user?.url}"
-//        blog.text = "Blog: ${user?.blog}"
         binding.user = user
 
         if(user!!.avatar != null)

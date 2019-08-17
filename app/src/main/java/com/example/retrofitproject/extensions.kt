@@ -6,9 +6,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import android.text.method.LinkMovementMethod
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
+import kotlinx.android.synthetic.main.fragment_repo.*
 
 fun Context.getToken(): String? {
     return "token " +getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -22,6 +24,20 @@ fun Context.processResponseCode(code: Int){
             Toast.makeText(this@processResponseCode, "Failed to logIn", Toast.LENGTH_LONG).show()
         }
     }
+}
+
+fun ImageView.setLanguageLogo(language: String?){
+    if (language != null)
+        this.setImageResource(
+            when (language) {
+                "Kotlin" -> R.drawable.ic_kotlin
+                "Java" -> R.drawable.ic_java
+                "Go" -> R.drawable.ic_go
+                else -> R.drawable.ic_github
+            }
+        )
+    else
+        this.setImageResource(android.R.drawable.stat_notify_error)
 }
 
 fun Uri.downloadFromUri(context: Context, name: String, path: String) {
