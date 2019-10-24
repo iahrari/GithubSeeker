@@ -7,8 +7,7 @@ import androidx.databinding.BindingAdapter
 object BindingAdapters {
     @JvmStatic
     @BindingAdapter("setMovement")
-    fun setMovementMethod(view: TextView, isEnabled: Boolean) =
-        view.setMovementMethod(if (isEnabled) LinkMovementMethod.getInstance() else null)
-
-
+    fun setMovementMethod(view: TextView, isEnabled: Boolean) {
+        view.movementMethod = if (isEnabled) LinkMovementMethod.getInstance() else null
+    }
 }

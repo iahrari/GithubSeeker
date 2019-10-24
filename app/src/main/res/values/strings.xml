@@ -18,4 +18,5 @@
     <string name="name">Name: </string>
     <string name="blog">Blog: </string>
     <string name="url">URL: </string>
+    <string name="latest_activities">Latest Activities</string>
 </resources>

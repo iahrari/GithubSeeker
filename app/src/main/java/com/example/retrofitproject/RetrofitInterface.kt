@@ -15,7 +15,7 @@ val client: RetrofitInterface = Retrofit.Builder()
 
 interface RetrofitInterface {
 
-    companion object{
+    companion object {
         const val clientId = "77d1f4e38421e86afda2"
         const val clientSecret = "eb93f0e3880dcc2ac9674b36265e4a7dc2ac3df0"
         const val redirectURL = "androidapp://iman-ahrari.ir:88"
@@ -36,7 +36,8 @@ interface RetrofitInterface {
     ): Response<List<Content>>
 
     @GET
-    suspend fun getContents(@Header("Authorization") auth: String, @Url url: String): Response<List<Content>>
+    suspend fun getContents(@Header("Authorization") auth: String, @Url url: String):
+            Response<List<Content>>
 
     @Headers("Accept: application/json")
     @POST("https://github.com/login/oauth/access_token")
@@ -49,9 +50,11 @@ interface RetrofitInterface {
 
     @Headers("Accept: application/vnd.github.3.html")
     @GET
-    suspend fun getContentMarkUpView(@Header("Authorization") auth: String, @Url url: String): Response<ResponseBody>
+    suspend fun getContentMarkUpView(@Header("Authorization") auth: String, @Url url: String):
+            Response<ResponseBody>
 
     @GET
-    suspend fun getContentJson(@Header("Authorization") auth: String, @Url url: String): Response<Content>
+    suspend fun getContentJson(@Header("Authorization") auth: String, @Url url: String):
+            Response<Content>
 
 }

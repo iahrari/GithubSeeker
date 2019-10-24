@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_files.*
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +30,7 @@ class FilesFragment : Fragment() {
         activity?.findViewById<TextView>(R.id.header_title)?.text = args.title
         url = args.path
         viewModel =
-            ViewModelProviders.of(this, FilesFViewModel.Factory(context!!, url)).get(FilesFViewModel::class.java)
+            ViewModelProvider(this, FilesFViewModel.Factory(context!!, url)).get(FilesFViewModel::class.java)
         return inflater.inflate(R.layout.fragment_files, container, false)
     }
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.retrofitproject.databinding.FragmentRepoBinding
 import kotlinx.android.synthetic.main.fragment_repo.*
@@ -27,7 +27,7 @@ class RepoFragment : Fragment() {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_repo, container, false)
         val args by navArgs<RepoFragmentArgs>()
         repo = args.repo
-        viewModel = ViewModelProviders.of(this, RepoFViewModel.Factory(context!!, repo)).get(RepoFViewModel::class.java)
+        viewModel = ViewModelProvider(this, RepoFViewModel.Factory(context!!, repo)).get(RepoFViewModel::class.java)
         activity?.findViewById<TextView>(R.id.header_title)?.text = repo.name
 
         return binding.root
@@ -45,7 +45,6 @@ class RepoFragment : Fragment() {
                 59
             )
         )
-
 
         content_recycler.adapter = adapter
         viewModel.contentsList.observe(this,
