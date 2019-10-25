@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        viewModel = ViewModelProviders.of(this, MainAViewModel.Factory(this)).get(MainAViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainAViewModel.Factory(this)).get(MainAViewModel::class.java)
         setObservers()
     }
 

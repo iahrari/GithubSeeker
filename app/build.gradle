@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
+def apiKeyFile = rootProject.file("apikey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyFile))
 android {
     compileSdkVersion 28
 
@@ -17,6 +20,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        buildConfigField("String", "CLIENT_SECRET", apiKeyProperties['CLIENT_SECRET'])
+        buildConfigField("String", "CLIENT_ID", apiKeyProperties['CLIENT_ID'])
     }
 
     buildTypes {

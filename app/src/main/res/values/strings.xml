@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Retrofit Project</string>
+    <string name="app_name">GitHub Seeker</string>
     <string name="repo_lang_logo_description">The logo of programming language which this project used</string>
     <string name="github_seeker">Github Seeker</string>
 

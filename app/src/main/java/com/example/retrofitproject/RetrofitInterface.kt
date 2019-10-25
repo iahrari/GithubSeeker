@@ -16,8 +16,15 @@ val client: RetrofitInterface = Retrofit.Builder()
 interface RetrofitInterface {
 
     companion object {
-        const val clientId = "77d1f4e38421e86afda2"
-        const val clientSecret = "eb93f0e3880dcc2ac9674b36265e4a7dc2ac3df0"
+        /**
+         * You should get your own api from github
+         * then create a file named apikey.properties in your project root directory
+         * and add following lines to the file:
+         * CLIENT_SECRET="YOUR_CLIENT_SECRET_KEY"
+         * CLIENT_ID="YOUR_CLIENT_ID"
+         */
+        const val clientId = BuildConfig.CLIENT_ID
+        const val clientSecret = BuildConfig.CLIENT_SECRET
         const val redirectURL = "androidapp://iman-ahrari.ir:88"
         const val baseURL = "https://api.github.com/"
     }
