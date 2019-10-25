@@ -26,10 +26,7 @@ import java.nio.charset.StandardCharsets
 
 class ContentFragment : Fragment() {
     //TODO: Add ViewModel for this fragment
-    enum class ContentType{
-        Markdown, Image, Code
-    }
-//Todo: delete this todo
+
     private lateinit var type: ContentType
     private val job = Job()
     private lateinit var content: Content
@@ -39,15 +36,10 @@ class ContentFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val args by navArgs<ContentFragmentArgs>()
-        content = args.content
 
-        type = when {
-            content.name.endsWith(".md,.markdowm,.wiki", 1) -> ContentType.Markdown
-            content.name.endsWith(".jpg,.png,.gif", 1) -> ContentType.Image
-            else -> ContentType.Code
-        }
+        content = args.content
+        type = getContentDataType(content.name)
     }
 
     override fun onCreateView(
@@ -60,10 +52,16 @@ class ContentFragment : Fragment() {
         if (type == ContentType.Image) {
             setImageView(binding.image)
         } else {
-            if (type == ContentType.Code)
-                setHighlightJs(binding.highlight)
-            else
-                setMarkdownWebView(binding.highlight)
+            when (type) {
+                ContentType.Code -> setHighlightJs(binding.highlight)
+                ContentType.Markdown -> setMarkdownWebView(binding.highlight)
+                else ->
+                    Toast.makeText(
+                        context,
+                        "Opening this file is not supported by this app.",
+                        Toast.LENGTH_LONG
+                    ).show()
+            }
         }
 
         return binding.root
@@ -93,9 +91,6 @@ class ContentFragment : Fragment() {
                 isNestedScrollingEnabled = false
             setZoomSupportEnabled(true)
             setShowLineNumbers(true)
-            setOnLanguageChangedListener {
-                Toast.makeText(context, it.getName(), Toast.LENGTH_LONG).show()
-            }
             highlightLanguage = language
             setBackgroundColor(Color.TRANSPARENT)
         }

@@ -1,5 +1,6 @@
 package com.example.retrofitproject
 
+import android.webkit.MimeTypeMap
 import com.pddstudio.highlightjs.models.Language
 import kotlin.math.round
 
@@ -10,6 +11,28 @@ fun prepareFileSize(size: Int): String{
         size >= 1024 -> (round(size.toFloat()/1024 * 100) / 100).toString() + " KB"
         else -> "$size B"
     }
+}
+
+fun getContentDataType(name: String): ContentType {
+    val fileType = getFileType(name)
+    return when {
+        fileType == "*/*" || fileType.contains("text") -> {
+            if (name.endsWith(".md,.markdowm,.wiki", 1))
+                ContentType.Markdown
+            else
+                ContentType.Code
+        }
+        fileType.contains("image") -> ContentType.Image
+        else -> ContentType.NotSupported
+    }
+
+}
+
+fun getFileType(name: String): String{
+    var extension = ""
+    val i = name.lastIndexOf('.')
+    if (i > 0) extension = name.substring(i + 1)
+    return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "*/*"
 }
 
 fun findLanguageFromName(name: String): Language{
