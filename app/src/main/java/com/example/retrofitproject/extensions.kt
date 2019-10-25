@@ -5,15 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.text.method.LinkMovementMethod
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.databinding.BindingAdapter
-import kotlinx.android.synthetic.main.fragment_repo.*
 
 fun Context.getToken(): String? {
-    return "token " +getSharedPreferences("token", Context.MODE_PRIVATE)
+    return "token " + getSharedPreferences("token", Context.MODE_PRIVATE)
         .getString("token", "")
 }
 

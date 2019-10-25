@@ -22,6 +22,8 @@ interface RetrofitInterface {
          * and add following lines to the file:
          * CLIENT_SECRET="YOUR_CLIENT_SECRET_KEY"
          * CLIENT_ID="YOUR_CLIENT_ID"
+         * For more information about what's happening here read this article:
+         * https://medium.com/@geocohn/keeping-your-android-projects-secrets-secret-393b8855765d
          */
         const val clientId = BuildConfig.CLIENT_ID
         const val clientSecret = BuildConfig.CLIENT_SECRET
