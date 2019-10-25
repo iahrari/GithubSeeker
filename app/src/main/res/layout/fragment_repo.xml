@@ -5,14 +5,14 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="repo" type="com.example.retrofitproject.Repo"/>
-        <import type="com.example.retrofitproject.SpannableUtil"/>
+        <variable name="repo" type="ir.iahrari.githubseeker.service.model.Repo"/>
+        <import type="ir.iahrari.githubseeker.ui.util.SpannableUtil"/>
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context=".RepoFragment">
+            tools:context=".ui.view.RepoFragment">
 
         <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

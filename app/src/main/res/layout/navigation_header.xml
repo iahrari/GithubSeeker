@@ -2,8 +2,8 @@
 <layout>
 
     <data>
-        <import type="com.example.retrofitproject.SpannableUtil"/>
-        <variable name="user" type="com.example.retrofitproject.User"/>
+        <import type="ir.iahrari.githubseeker.ui.util.SpannableUtil"/>
+        <variable name="user" type="ir.iahrari.githubseeker.service.model.User"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

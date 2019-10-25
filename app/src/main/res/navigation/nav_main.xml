@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/mainFragment"
-            android:name="com.example.retrofitproject.MainFragment"
+            android:name="ir.iahrari.githubseeker.ui.view.MainFragment"
             android:label="fragment_main"
             tools:layout="@layout/fragment_main">
         <action
@@ -16,12 +16,12 @@
         </fragment>
     <fragment
             android:id="@+id/repoFragment"
-            android:name="com.example.retrofitproject.RepoFragment"
+            android:name="ir.iahrari.githubseeker.ui.view.RepoFragment"
             android:label="fragment_repo"
             tools:layout="@layout/fragment_repo">
         <argument
                 android:name="repo"
-                app:argType="com.example.retrofitproject.Repo"/>
+                app:argType="ir.iahrari.githubseeker.service.model.Repo"/>
         <action
                 android:id="@+id/action_repoFragment_to_filesFragment"
                 app:destination="@id/filesFragment"/>
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
             android:id="@+id/filesFragment"
-            android:name="com.example.retrofitproject.FilesFragment"
+            android:name="ir.iahrari.githubseeker.ui.view.FilesFragment"
             android:label="FilesFragment">
         <argument
                 android:name="title"
@@ -43,11 +43,11 @@
         <action android:id="@+id/action_filesFragment_to_contentFragment" app:destination="@id/contentFragment"/>
     </fragment>
     <fragment android:id="@+id/contentFragment"
-              android:name="com.example.retrofitproject.ContentFragment"
+              android:name="ir.iahrari.githubseeker.ui.view.ContentFragment"
               android:label="fragment_content"
               tools:layout="@layout/fragment_content">
         <argument
             android:name="content"
-            app:argType="com.example.retrofitproject.Content"/>
+            app:argType="ir.iahrari.githubseeker.service.model.Content"/>
     </fragment>
 </navigation>

@@ -3,10 +3,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <data>
-        <variable name="content" type="com.example.retrofitproject.Content"/>
-        <import type="com.example.retrofitproject.UtilKt"/>
+        <variable name="content" type="ir.iahrari.githubseeker.service.model.Content"/>
+        <import type="ir.iahrari.githubseeker.service.util.UtilKt"/>
         <import type="android.view.View"/>
-        <import type="com.example.retrofitproject.R"/>
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout

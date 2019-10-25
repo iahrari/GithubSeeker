@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="repo" type="com.example.retrofitproject.Repo"/>
+        <variable name="repo" type="ir.iahrari.githubseeker.service.model.Repo"/>
     </data>
     <LinearLayout
             android:background="?attr/selectableItemBackground"
