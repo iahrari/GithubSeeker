@@ -54,44 +54,50 @@ class ContentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-            R.layout.fragment_content, container, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.fragment_content, container, false
+        )
         binding.type = type
         activity?.findViewById<TextView>(R.id.header_title)!!.text = content.name
-        if (type == ContentType.Image) {
-            setImageView(binding.image)
-        } else {
-            when (type) {
-                ContentType.Code -> setHighlightJs(binding.highlight)
-                ContentType.Markdown -> setMarkdownWebView(binding.highlight)
-                else ->
-                    Toast.makeText(
-                        context,
-                        "Opening this file is not supported by this app.",
-                        Toast.LENGTH_LONG
-                    ).show()
-            }
-        }
 
+        when (type) {
+            ContentType.Image -> setImageView(binding.image)
+            ContentType.Code -> setHighlightJs(binding.highlight)
+            ContentType.Markdown -> setMarkdownWebView(binding.highlight)
+            else ->
+                Toast.makeText(
+                    context,
+                    "Opening this file is not supported by this app.",
+                    Toast.LENGTH_LONG
+                ).show()
+        }
         return binding.root
     }
 
-    private fun setMarkdownWebView(webView: WebView){
+    private fun setMarkdownWebView(webView: WebView) {
         scope.launch {
             try {
                 val response = client.getContentMarkUpView(context!!.getToken()!!, content.url!!)
-                if(response.isSuccessful)
-                    webView.loadDataWithBaseURL(null, response.body()!!.string(), "text/html; charset=utf-8", "UTF-8", null)
+                if (response.isSuccessful)
+                    webView.loadDataWithBaseURL(
+                        null,
+                        response.body()!!.string(),
+                        "text/html; charset=utf-8",
+                        "UTF-8",
+                        null
+                    )
                 else
                     context?.processResponseCode(response.code())
 
-            } catch (t: Throwable){
+            } catch (t: Throwable) {
                 Toast.makeText(context, t.localizedMessage, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun setHighlightJs(highlight: HighlightJsView){
+    private fun setHighlightJs(highlight: HighlightJsView) {
+        highlight.setZoomSupportEnabled(true)
         language = findLanguageFromName(content.name)
         highlight.apply {
 
@@ -106,7 +112,7 @@ class ContentFragment : Fragment() {
         getContent(content.url!!, highlight)
     }
 
-    private fun setImageView(image: ImageView){
+    private fun setImageView(image: ImageView) {
         val url = GlideUrl(
             content.downloadURl,
             LazyHeaders.Builder().addHeader("Authorization", context!!.getToken()!!).build()
