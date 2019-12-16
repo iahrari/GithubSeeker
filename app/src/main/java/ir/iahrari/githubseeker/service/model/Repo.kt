@@ -16,7 +16,12 @@ data class Repo(
     @SerializedName("ssh_url") val sshURL: String?,
     @SerializedName("clone_url") val cloneURL: String?,
     val size: Int,
-    val owner: User
+    val owner: User?,
+    val license: License?,
+    val forks: Int?,
+    val watchers: Int?,
+    @SerializedName("fork") val isForked: Boolean?,
+    @SerializedName("open_issues") val openIssues: Int?
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -30,7 +35,12 @@ data class Repo(
         parcel.readString(),
         parcel.readString(),
         parcel.readInt(),
-        parcel.readParcelable(User::class.java.classLoader)
+        parcel.readParcelable(User::class.java.classLoader),
+        parcel.readParcelable(License::class.java.classLoader),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

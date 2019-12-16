@@ -22,7 +22,7 @@ interface RetrofitInterface {
 
     companion object {
         /**
-         * You should get your own api from github
+         * You should get your own api keys from github
          * then create a file named apikey.properties in your project root directory
          * and add following lines to the file:
          * CLIENT_SECRET="YOUR_CLIENT_SECRET_KEY"
