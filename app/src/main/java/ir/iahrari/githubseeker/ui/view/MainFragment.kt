@@ -30,7 +30,7 @@ class MainFragment : Fragment(), MainActivity.OnDrawerMenuItemClicked {
     ): View? {
         (activity as MainActivity).setDrawerListener(this)
         viewModel = ViewModelProvider(this,
-            MainFViewModel.Factory(context!!)
+            MainFViewModel.Factory(requireContext())
         ).get(MainFViewModel::class.java)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
@@ -42,7 +42,7 @@ class MainFragment : Fragment(), MainActivity.OnDrawerMenuItemClicked {
         )
         recycler.addItemDecoration(
             MiddleDividerItemDecoration(
-                context!!,
+                requireContext(),
                 MiddleDividerItemDecoration.ALL,
                 0
             )
@@ -51,6 +51,6 @@ class MainFragment : Fragment(), MainActivity.OnDrawerMenuItemClicked {
         adapter = ListAdapter()
         recycler.adapter = adapter
 
-        viewModel.reposList.observe(this, Observer<List<Repo>> { adapter.submitList(it) })
+        viewModel.reposList.observe(viewLifecycleOwner, Observer<List<Repo>> { adapter.submitList(it) })
     }
 }
