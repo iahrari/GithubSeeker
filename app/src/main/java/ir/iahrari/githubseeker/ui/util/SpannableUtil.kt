@@ -27,7 +27,7 @@ class SpannableUtil {
                 SpannableString(description + text).apply {
                     setSpan(object: ClickableSpan(){
                         override fun onClick(widget: View) {
-                            (widget.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText(description, text)
+                            (widget.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(ClipData.newPlainText(description, text))
                             Toast.makeText(widget.context, "Text copied to clipboard.", Toast.LENGTH_LONG).show()
                         }
                     }, description.length, description.length + text.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
