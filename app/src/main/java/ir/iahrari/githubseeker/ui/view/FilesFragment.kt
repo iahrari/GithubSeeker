@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Content
 import ir.iahrari.githubseeker.ui.adapter.ContentListAdapter
@@ -16,6 +17,7 @@ import ir.iahrari.githubseeker.ui.util.MiddleDividerItemDecoration
 import ir.iahrari.githubseeker.viewmodel.FilesFViewModel
 import kotlinx.android.synthetic.main.fragment_files.*
 
+@AndroidEntryPoint
 class FilesFragment : Fragment() {
     private lateinit var adapter: ContentListAdapter
     private lateinit var url: String

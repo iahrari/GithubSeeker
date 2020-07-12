@@ -13,12 +13,14 @@ import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.viewmodel.MainAViewModel
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.databinding.ActivityMainBinding
 import ir.iahrari.githubseeker.databinding.NavigationHeaderBinding
 import ir.iahrari.githubseeker.service.model.User
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

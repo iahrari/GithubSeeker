@@ -29,9 +29,11 @@ import ir.iahrari.githubseeker.service.util.processResponseCode
 import com.pddstudio.highlightjs.HighlightJsView
 import com.pddstudio.highlightjs.models.Language
 import com.pddstudio.highlightjs.models.Theme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.nio.charset.StandardCharsets
 
+@AndroidEntryPoint
 class ContentFragment : Fragment() {
     //TODO: Add ViewModel for this fragment
 
@@ -78,7 +80,7 @@ class ContentFragment : Fragment() {
     private fun setMarkdownWebView(webView: WebView) {
         scope.launch {
             try {
-                val response = client.getContentMarkUpView(context!!.getToken()!!, content.url!!)
+                val response = client.getContentMarkUpView(requireContext().getToken()!!, content.url!!)
                 if (response.isSuccessful)
                     webView.loadDataWithBaseURL(
                         null,
@@ -115,7 +117,7 @@ class ContentFragment : Fragment() {
     private fun setImageView(image: ImageView) {
         val url = GlideUrl(
             content.downloadURl,
-            LazyHeaders.Builder().addHeader("Authorization", context!!.getToken()!!).build()
+            LazyHeaders.Builder().addHeader("Authorization", requireContext().getToken()!!).build()
         )
 
         Glide.with(this).load(url).into(image)
@@ -124,12 +126,12 @@ class ContentFragment : Fragment() {
     private fun getContent(path: String, view: HighlightJsView) {
         scope.launch {
             try {
-                val response = client.getContentJson(context!!.getToken()!!, path)
+                val response = client.getContentJson(requireContext().getToken()!!, path)
                 if (response.isSuccessful) {
                     val decode = Base64.decode(response.body()?.content, Base64.DEFAULT)
                     view.setSource(String(decode, StandardCharsets.UTF_8))
                 } else
-                    context!!.processResponseCode(response.code())
+                    requireContext().processResponseCode(response.code())
             } catch (t: Throwable) {
                 Toast.makeText(context, t.localizedMessage, Toast.LENGTH_LONG).show()
             }

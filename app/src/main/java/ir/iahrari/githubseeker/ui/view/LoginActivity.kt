@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
                         processResponseCode(response.code())
 
                 } catch (t: Throwable) {
-                    Log.i("logAuthProblem", t.message)
+                    Log.i("logAuthProblem", t.localizedMessage!!)
                 }
             }
         }

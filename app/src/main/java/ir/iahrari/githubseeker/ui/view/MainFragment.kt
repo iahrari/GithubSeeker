@@ -18,7 +18,8 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : Fragment(), MainActivity.OnDrawerMenuItemClicked {
     override fun onDrawerMenuItemClicked(id: Int) {
         when(id){
-            R.id.latest_activities -> Toast.makeText(context, "Latest Activities", Toast.LENGTH_LONG).show()
+            R.id.latest_activities ->
+                Toast.makeText(context, "Latest Activities", Toast.LENGTH_LONG).show()
         }
     }
 
