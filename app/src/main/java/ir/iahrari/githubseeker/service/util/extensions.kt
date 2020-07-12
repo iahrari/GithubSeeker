@@ -10,7 +10,7 @@ import android.widget.Toast
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.RetrofitInterface
 
-fun Context.getToken(): String? {
+fun Context.getToken(): String {
     return "token " + getSharedPreferences("token", Context.MODE_PRIVATE)
         .getString("token", "")
 }
@@ -44,7 +44,6 @@ fun Uri.downloadFromUri(context: Context, name: String, path: String) {
     rm.apply {
         addRequestHeader("Authorization", context.getToken())
         setTitle("Downloading $name")
-        setVisibleInDownloadsUi(true)
         setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/GithubSeeker/$path")
     }
 

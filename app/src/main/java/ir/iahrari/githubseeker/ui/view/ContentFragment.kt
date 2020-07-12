@@ -19,7 +19,6 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import ir.iahrari.githubseeker.databinding.FragmentContentBinding
 import ir.iahrari.githubseeker.R
-import ir.iahrari.githubseeker.service.client
 import ir.iahrari.githubseeker.service.model.Content
 import ir.iahrari.githubseeker.service.model.ContentType
 import ir.iahrari.githubseeker.service.util.findLanguageFromName
@@ -30,8 +29,10 @@ import com.pddstudio.highlightjs.HighlightJsView
 import com.pddstudio.highlightjs.models.Language
 import com.pddstudio.highlightjs.models.Theme
 import dagger.hilt.android.AndroidEntryPoint
+import ir.iahrari.githubseeker.service.RetrofitInterface
 import kotlinx.coroutines.*
 import java.nio.charset.StandardCharsets
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContentFragment : Fragment() {
@@ -43,6 +44,7 @@ class ContentFragment : Fragment() {
     private val scope = CoroutineScope(Dispatchers.Main + job)
     private var language: Language? = null
     private lateinit var binding: FragmentContentBinding
+    @Inject lateinit var client: RetrofitInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +82,9 @@ class ContentFragment : Fragment() {
     private fun setMarkdownWebView(webView: WebView) {
         scope.launch {
             try {
-                val response = client.getContentMarkUpView(requireContext().getToken()!!, content.url!!)
+                val response = client.getContentMarkUpView(
+//                    requireContext().getToken(),
+                    content.url!!)
                 if (response.isSuccessful)
                     webView.loadDataWithBaseURL(
                         null,
@@ -117,7 +121,7 @@ class ContentFragment : Fragment() {
     private fun setImageView(image: ImageView) {
         val url = GlideUrl(
             content.downloadURl,
-            LazyHeaders.Builder().addHeader("Authorization", requireContext().getToken()!!).build()
+            LazyHeaders.Builder().addHeader("Authorization", requireContext().getToken()).build()
         )
 
         Glide.with(this).load(url).into(image)
@@ -126,7 +130,9 @@ class ContentFragment : Fragment() {
     private fun getContent(path: String, view: HighlightJsView) {
         scope.launch {
             try {
-                val response = client.getContentJson(requireContext().getToken()!!, path)
+                val response = client.getContentJson(
+//                    requireContext().getToken(),
+                    path)
                 if (response.isSuccessful) {
                     val decode = Base64.decode(response.body()?.content, Base64.DEFAULT)
                     view.setSource(String(decode, StandardCharsets.UTF_8))

@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+//import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.R
@@ -21,9 +22,7 @@ import kotlinx.android.synthetic.main.fragment_files.*
 class FilesFragment : Fragment() {
     private lateinit var adapter: ContentListAdapter
     private lateinit var url: String
-//    private val job = Job()
-//    private val scope = Scope(Dispatchers.Main + job)
-    private lateinit var viewModel: FilesFViewModel
+    private val viewModel: FilesFViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +31,11 @@ class FilesFragment : Fragment() {
         val args by navArgs<FilesFragmentArgs>()
         activity?.findViewById<TextView>(R.id.header_title)?.text = args.title
         url = args.path
-        viewModel =
-            ViewModelProvider(this,
-                FilesFViewModel.Factory(context!!, url)
-            ).get(FilesFViewModel::class.java)
+        viewModel.setUrl(url)
+//        viewModel =
+//            ViewModelProvider(this,
+//                FilesFViewModel.Factory(requireContext(), url)
+//            ).get(FilesFViewModel::class.java)
         return inflater.inflate(R.layout.fragment_files, container, false)
     }
 
@@ -45,14 +45,14 @@ class FilesFragment : Fragment() {
         adapter = ContentListAdapter(false)
         content_recycler.addItemDecoration(
             MiddleDividerItemDecoration(
-                context!!,
+                requireContext(),
                 MiddleDividerItemDecoration.VERTICAL,
                 59
             )
         )
 
         viewModel.contentsList.observe(
-            this,
+            viewLifecycleOwner,
             Observer<List<Content>> { adapter.submitList(it as MutableList) }
         )
         content_recycler.adapter = adapter
