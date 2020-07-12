@@ -61,7 +61,5 @@ interface RetrofitInterface {
     ): Response<ResponseBody>
 
     @GET
-    suspend fun getContentJson(
-        @Url url: String
-    ): Response<Content>
+    suspend fun getContentJson(@Url url: String): Response<Content>
 }
