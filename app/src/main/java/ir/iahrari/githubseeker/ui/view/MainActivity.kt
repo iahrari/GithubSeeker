@@ -34,9 +34,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupNavigation()
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-//        viewModel = ViewModelProvider(this,
-//            MainAViewModel.Factory(this)
-//        ).get(MainAViewModel::class.java)
         setObservers()
     }
 

@@ -82,9 +82,7 @@ class ContentFragment : Fragment() {
     private fun setMarkdownWebView(webView: WebView) {
         scope.launch {
             try {
-                val response = client.getContentMarkUpView(
-//                    requireContext().getToken(),
-                    content.url!!)
+                val response = client.getContentMarkUpView(content.url!!)
                 if (response.isSuccessful)
                     webView.loadDataWithBaseURL(
                         null,
@@ -130,9 +128,7 @@ class ContentFragment : Fragment() {
     private fun getContent(path: String, view: HighlightJsView) {
         scope.launch {
             try {
-                val response = client.getContentJson(
-//                    requireContext().getToken(),
-                    path)
+                val response = client.getContentJson(path)
                 if (response.isSuccessful) {
                     val decode = Base64.decode(response.body()?.content, Base64.DEFAULT)
                     view.setSource(String(decode, StandardCharsets.UTF_8))

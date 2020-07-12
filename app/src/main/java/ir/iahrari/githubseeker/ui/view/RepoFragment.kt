@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-//import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.databinding.FragmentRepoBinding
@@ -38,9 +37,6 @@ class RepoFragment : Fragment() {
             R.layout.fragment_repo, container, false)
         val args by navArgs<RepoFragmentArgs>()
         repo = args.repo
-//        viewModel = ViewModelProvider(this,
-//            RepoFViewModel.Factory(requireContext(), repo)
-//        ).get(RepoFViewModel::class.java)
         viewModel.setRepo(repo)
         activity?.findViewById<TextView>(R.id.header_title)?.text = repo.name
 

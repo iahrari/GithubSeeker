@@ -8,10 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import ir.iahrari.githubseeker.service.Repository
-//import androidx.lifecycle.ViewModel
-//import androidx.lifecycle.ViewModelProvider
 import ir.iahrari.githubseeker.service.model.User
-//import ir.iahrari.githubseeker.service.util.getToken
 import ir.iahrari.githubseeker.service.util.processResponseCode
 import kotlinx.coroutines.launch
 
@@ -25,9 +22,7 @@ class MainAViewModel @ViewModelInject constructor(
     init {
         scope.launch {
             try {
-                _userData.postValue(repository.getUser(
-//                    context.getToken()!!
-                ))
+                _userData.postValue(repository.getUser())
             } catch (t: Throwable) {
                 if (t.cause?.message == "codeProblem")
                     context.processResponseCode(t.message!!.toInt())
@@ -38,15 +33,4 @@ class MainAViewModel @ViewModelInject constructor(
             }
         }
     }
-
-//    class Factory(val context: Context): ViewModelProvider.Factory{
-//        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//            if (modelClass.isAssignableFrom(MainAViewModel::class.java)) {
-//                @Suppress("UNCHECKED_CAST")
-//                return MainAViewModel(context) as T
-//
-//            }
-//            throw IllegalArgumentException("Unable to construct ViewModel")
-//        }
-//    }
 }

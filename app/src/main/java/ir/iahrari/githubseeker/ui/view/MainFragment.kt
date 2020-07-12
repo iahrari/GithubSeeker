@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
-//import androidx.lifecycle.ViewModelProvider
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Repo
 import ir.iahrari.githubseeker.ui.adapter.ListAdapter
@@ -33,11 +32,6 @@ class MainFragment : Fragment(), MainActivity.OnDrawerMenuItemClicked {
         savedInstanceState: Bundle?
     ): View? {
         (activity as MainActivity).setDrawerListener(this)
-        //viewModel
-        //= ViewModelProvider(this,
-        //    MainFViewModel.Factory(requireContext())
-        //).get(MainFViewModel::class.java)
-
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
