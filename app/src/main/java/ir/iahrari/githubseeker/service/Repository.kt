@@ -6,39 +6,26 @@ import ir.iahrari.githubseeker.service.model.User
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val client: RetrofitInterface){
-//    @Inject lateinit
 
-    suspend fun getUser(
-//        token: String
-    ): User? {
-        val response = client.getUserDetail(
-//            token
-        )
+    suspend fun getUser(): User? {
+        val response = client.getUserDetail()
         if (response.isSuccessful)
             return response.body()
         else
             throw Throwable(response.code().toString(), Throwable("codeProblem"))
     }
 
-    suspend fun getSingleRepo(
-//        token: String ,
-        path: String): List<Content>? {
+    suspend fun getSingleRepo(path: String): List<Content>? {
         val name = path.split("/")
-        val response = client.getSingleRepo(
-//            token,
-            name[0], name[1])
+        val response = client.getSingleRepo(name[0], name[1])
         if (response.isSuccessful)
             return response.body()
         else
             throw Throwable(response.code().toString(), Throwable("codeProblem"))
     }
 
-    suspend fun getRepos(
-//        accessToken: String
-    ): List<Repo> {
-        val response = client.getReposAsync(
-//            accessToken
-        )
+    suspend fun getRepos(): List<Repo> {
+        val response = client.getReposAsync()
 
         if (response.isSuccessful) {
             return response.body()!!
@@ -47,11 +34,8 @@ class Repository @Inject constructor(private val client: RetrofitInterface){
     }
 
     suspend fun getContents(
-//        accessToken: String,
         url: String): List<Content> {
-        val response = client.getContents(
-//            accessToken,
-            url)
+        val response = client.getContents(url)
         if (response.isSuccessful)
             return response.body()!!
         else
