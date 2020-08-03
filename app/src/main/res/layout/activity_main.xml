@@ -29,21 +29,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="?attr/actionBarSize">
 
-                        <ImageView
-                                android:id="@+id/hero_image"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:srcCompat="@drawable/ic_github"
-                                android:contentDescription="@string/app_name"/>
+<!--                        <ImageView-->
+<!--                                android:id="@+id/hero_image"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                app:srcCompat="@drawable/ic_github"-->
+<!--                                android:contentDescription="@string/app_name"/>-->
 
                         <TextView
                                 android:id="@+id/header_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingStart="8dp"
-                                android:gravity="center_vertical"
                                 android:maxLines="1"
-                                android:layout_gravity="center_vertical"
+                                android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:textColor="@color/design_default_color_on_primary"
                                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
