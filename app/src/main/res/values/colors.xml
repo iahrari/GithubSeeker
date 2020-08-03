@@ -10,9 +10,9 @@
     <!--<color name="primaryTextColor">#ffffff</color>-->
     <!--<color name="secondaryTextColor">#ffffff</color>-->
 
-    <color name="primaryColor">#37474f</color>
+    <color name="primaryColor">#6C63FF</color>
     <color name="primaryLightColor">#62727b</color>
-    <color name="primaryDarkColor">#102027</color>
+    <color name="primaryDarkColor">#263238</color>
     <color name="secondaryColor">#d81b60</color>
     <color name="secondaryLightColor">#ff5c8d</color>
     <color name="secondaryDarkColor">#a00037</color>
