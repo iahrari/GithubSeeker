@@ -41,8 +41,6 @@ class LoginActivity : AppCompatActivity() {
 
         else
             getAccessToken()
-
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     private fun getAccessToken(){
