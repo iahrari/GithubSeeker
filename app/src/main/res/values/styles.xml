@@ -5,9 +5,10 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
-        <item name="colorSecondary">@color/primaryLightColor</item>
+<!--        <item name="colorPrimaryVariant">@color/primaryColor</item>-->
+<!--        <item name="colorSecondary">@color/primaryLightColor</item>-->
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorAccent">@color/primaryColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
 

@@ -18,6 +18,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.viewmodel.MainAViewModel
 import ir.iahrari.githubseeker.R
@@ -59,10 +60,7 @@ class MainActivity : AppCompatActivity() {
                     navController,
                     binding.drawerLayout
                 ) || super.onSupportNavigateUp()
-
-
-            }
-            else -> navigateUp(
+            } else -> navigateUp(
                 navController,
                 binding.drawerLayout
             ) || super.onSupportNavigateUp()
@@ -121,9 +119,10 @@ class MainActivity : AppCompatActivity() {
         headerBinding.user = user
 
         if (user!!.avatar != null)
-            Glide.with(this).load(user.avatar).into(headerBinding.avatar)
-        else if (user.gravatar != null)
-            Glide.with(this).load(user.gravatar).into(headerBinding.avatar)
+            Glide.with(this).load(user.avatar).circleCrop().into(headerBinding.avatar)
+
+//        else if (user.gravatar != null)
+//            Glide.with(this).load(user.gravatar).into(headerBinding.avatar)
     }
 
     fun setDrawerListener(listener: OnDrawerMenuItemClicked) {
