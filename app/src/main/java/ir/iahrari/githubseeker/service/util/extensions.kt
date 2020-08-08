@@ -44,6 +44,7 @@ fun Uri.downloadFromUri(context: Context, name: String, path: String) {
     rm.apply {
         addRequestHeader("Authorization", context.getToken())
         setTitle("Downloading $name")
+        setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/GithubSeeker/$path")
     }
 
