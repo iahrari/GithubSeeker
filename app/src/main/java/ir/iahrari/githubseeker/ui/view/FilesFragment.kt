@@ -1,7 +1,6 @@
 package ir.iahrari.githubseeker.ui.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import ir.iahrari.githubseeker.viewmodel.FilesFViewModel
 import kotlinx.android.synthetic.main.fragment_files.*
 
 @AndroidEntryPoint
-class FilesFragment : Fragment() {
+class FilesFragment : BasePermissionFragment() {
     private lateinit var adapter: ContentListAdapter
     private lateinit var url: String
     private val viewModel: FilesFViewModel by viewModels()
@@ -31,17 +30,13 @@ class FilesFragment : Fragment() {
         activity?.findViewById<TextView>(R.id.header_title)?.text = args.title
         url = args.path
         viewModel.setUrl(url)
-//        viewModel =
-//            ViewModelProvider(this,
-//                FilesFViewModel.Factory(requireContext(), url)
-//            ).get(FilesFViewModel::class.java)
         return inflater.inflate(R.layout.fragment_files, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ContentListAdapter(false)
+        adapter = ContentListAdapter(this, false)
         content_recycler.addItemDecoration(
             MiddleDividerItemDecoration(
                 requireContext(),

@@ -1,10 +1,16 @@
 package ir.iahrari.githubseeker.ui.adapter
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -13,16 +19,19 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.iahrari.githubseeker.databinding.ContentItemBinding
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Content
+import ir.iahrari.githubseeker.service.util.REQUEST_WRITE_EXTERNAL
 import ir.iahrari.githubseeker.service.util.downloadFromUri
+import ir.iahrari.githubseeker.ui.view.BasePermissionFragment
 import ir.iahrari.githubseeker.ui.view.FilesFragmentDirections
 import ir.iahrari.githubseeker.ui.view.RepoFragmentDirections
 
-class ContentListAdapter(private val isRepo: Boolean) :
+class ContentListAdapter(private val fragment: BasePermissionFragment, private val isRepo: Boolean) :
     ListAdapter<Content, ContentListAdapter.CLAHolder>(
         MDiffUtil()
     ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CLAHolder =
         CLAHolder.from(
+            fragment,
             parent,
             R.layout.content_item,
             isRepo
@@ -51,7 +60,7 @@ class ContentListAdapter(private val isRepo: Boolean) :
         holder.bindView(getItem(position))
     }
 
-    class CLAHolder(private val binding: ContentItemBinding, private val isRepo: Boolean) :
+    class CLAHolder(private val fragment: BasePermissionFragment, private val binding: ContentItemBinding, private val isRepo: Boolean) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(data: Content) {
@@ -82,12 +91,13 @@ class ContentListAdapter(private val isRepo: Boolean) :
 
         private fun bindViewsForFile(data: Content): NavDirections {
             binding.downloadButton.setOnClickListener {
-                Uri.parse(data.downloadURl)
-                    .downloadFromUri(
-                        binding.root.context,
-                        data.name,
-                        data.hUrl.split("github.com/")[1]
-                    )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
+                    if(ContextCompat.checkSelfPermission(binding.root.context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                        downloadUri(data)
+                    else fragment.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_WRITE_EXTERNAL){
+                        downloadUri(data)
+                    }
+                } else downloadUri(data)
             }
 
             //Open file with github built in mark down for documents
@@ -102,9 +112,19 @@ class ContentListAdapter(private val isRepo: Boolean) :
 
         }
 
+        private fun downloadUri(data: Content){
+            Uri.parse(data.downloadURl)
+                .downloadFromUri(
+                    binding.root.context,
+                    data.name,
+                    data.hUrl.split("github.com/")[1]
+                )
+        }
+
         companion object {
-            fun from(parent: ViewGroup, layout: Int, isRepo: Boolean): CLAHolder =
+            fun from(fragment: BasePermissionFragment, parent: ViewGroup, layout: Int, isRepo: Boolean): CLAHolder =
                 CLAHolder(
+                    fragment,
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         layout,

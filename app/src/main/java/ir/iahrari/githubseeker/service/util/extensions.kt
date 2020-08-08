@@ -39,7 +39,6 @@ fun ImageView.setLanguageLogo(language: String?){
 }
 
 fun Uri.downloadFromUri(context: Context, name: String, path: String) {
-    //TODO: add Runtime Permission
     val rm = DownloadManager.Request(this)
     rm.apply {
         addRequestHeader("Authorization", context.getToken())

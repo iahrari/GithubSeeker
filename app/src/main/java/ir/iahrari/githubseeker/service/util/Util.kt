@@ -6,6 +6,8 @@ import ir.iahrari.githubseeker.service.model.ContentType
 import com.pddstudio.highlightjs.models.Language
 import kotlin.math.round
 
+const val REQUEST_WRITE_EXTERNAL = 0
+
 fun prepareFileSize(size: Int): String{
     return when {
         size >= 1024 * 1024 * 1024 -> (round(size.toFloat()/(1024 * 1024 * 1024) *100) / 100).toString() + " GB"
