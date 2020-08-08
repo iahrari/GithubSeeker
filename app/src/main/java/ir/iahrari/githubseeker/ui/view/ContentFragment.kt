@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.request.RequestOptions
 import ir.iahrari.githubseeker.databinding.FragmentContentBinding
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Content
@@ -119,10 +120,10 @@ class ContentFragment : Fragment() {
     private fun setImageView(image: ImageView) {
         val url = GlideUrl(
             content.downloadURl,
-            LazyHeaders.Builder().addHeader("Authorization", requireContext().getToken()).build()
+            LazyHeaders.Builder()
+                .addHeader("Authorization", requireContext().getToken()).build()
         )
-
-        Glide.with(this).load(url).into(image)
+        Glide.with(this).load(url).dontTransform().into(image)
     }
 
     private fun getContent(path: String, view: HighlightJsView) {
