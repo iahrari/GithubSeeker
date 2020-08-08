@@ -1,5 +1,6 @@
 package ir.iahrari.githubseeker.service.util
 
+import android.util.Log
 import android.webkit.MimeTypeMap
 import ir.iahrari.githubseeker.service.model.ContentType
 import com.pddstudio.highlightjs.models.Language
@@ -16,8 +17,9 @@ fun prepareFileSize(size: Int): String{
 
 fun getContentDataType(name: String): ContentType {
     val fileType = getFileType(name)
+    Log.i("File type:", fileType)
     return when {
-        fileType == "*/*" || fileType.contains("text") -> {
+        fileType == "*/*" || fileType.contains("text") || fileType.endsWith("json") -> {
             if (name.endsWith(".md,.markdowm,.wiki", 1))
                 ContentType.Markdown
             else
