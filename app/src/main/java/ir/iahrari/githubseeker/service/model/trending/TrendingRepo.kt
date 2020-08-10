@@ -35,7 +35,9 @@ data class TrendingRepo(
                 null,
                 "",
                 "",
-                ""
+                "",
+                0,
+                0
             ),
             null,
             forks,

@@ -10,7 +10,9 @@ data class User(
     @SerializedName("gravatar_url") val gravatar: String?,
     val name: String,
     @SerializedName("html_url") val url: String,
-     val blog: String
+    val blog: String,
+    val followers: Int,
+    val following: Int
 ): Parcelable {
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     constructor(parcel: Parcel) : this(
@@ -19,7 +21,9 @@ data class User(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!
+        parcel.readString()!!,
+        parcel.readInt(),
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

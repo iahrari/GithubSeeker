@@ -20,4 +20,6 @@
     <string name="url">URL: </string>
     <string name="latest_activities">Latest Activities</string>
     <string name="star_this_repository">Star this repository</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
 </resources>
