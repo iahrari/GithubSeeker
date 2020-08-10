@@ -69,7 +69,7 @@ fun Context.getAuthorizeCode() {
 @Suppress("UNUSED_PARAMETER")
 fun String.endsWith(prefix: String, comma: Int): Boolean {
     for (value in prefix.split(","))
-        if (this.endsWith(value))
+        if (this.toLowerCase().endsWith(value))
             return true
     return false
 }

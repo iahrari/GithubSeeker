@@ -21,14 +21,13 @@ fun getContentDataType(name: String): ContentType {
     val fileType = getFileType(name)
     Log.i("File type:", fileType)
     return when {
-        fileType == "*/*" || fileType.contains("text") || fileType.endsWith("json") -> {
+        fileType.contains("image") -> ContentType.Image
+        else -> {
             if (name.endsWith(".md,.markdowm,.wiki", 1))
                 ContentType.Markdown
             else
                 ContentType.Code
         }
-        fileType.contains("image") -> ContentType.Image
-        else -> ContentType.NotSupported
     }
 
 }
