@@ -10,7 +10,7 @@ import android.widget.Toast
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.RetrofitInterface
 
-fun Context.getToken(): String? {
+fun Context.getToken(): String {
     return "token " + getSharedPreferences("token", Context.MODE_PRIVATE)
         .getString("token", "")
 }
@@ -39,12 +39,11 @@ fun ImageView.setLanguageLogo(language: String?){
 }
 
 fun Uri.downloadFromUri(context: Context, name: String, path: String) {
-    //TODO: add Runtime Permission
     val rm = DownloadManager.Request(this)
     rm.apply {
         addRequestHeader("Authorization", context.getToken())
         setTitle("Downloading $name")
-        setVisibleInDownloadsUi(true)
+        setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/GithubSeeker/$path")
     }
 

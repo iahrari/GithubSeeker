@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.service.RetrofitInterface
-import ir.iahrari.githubseeker.service.client
 import ir.iahrari.githubseeker.service.util.getAuthorizeCode
 import ir.iahrari.githubseeker.service.util.getToken
 import ir.iahrari.githubseeker.service.util.processResponseCode
@@ -15,11 +15,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val job = Job()
     private val scope = CoroutineScope(Dispatchers.Main + job)
-
+    @Inject lateinit var client: RetrofitInterface
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
@@ -39,8 +41,6 @@ class LoginActivity : AppCompatActivity() {
 
         else
             getAccessToken()
-
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     private fun getAccessToken(){
@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
                         processResponseCode(response.code())
 
                 } catch (t: Throwable) {
-                    Log.i("logAuthProblem", t.message)
+                    Log.i("logAuthProblem", t.localizedMessage!!)
                 }
             }
         }

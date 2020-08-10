@@ -1,45 +1,86 @@
 package ir.iahrari.githubseeker.viewmodel
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import ir.iahrari.githubseeker.service.model.Repo
-import ir.iahrari.githubseeker.service.util.getToken
+import dagger.hilt.android.qualifiers.ApplicationContext
+import ir.iahrari.githubseeker.service.TrendingRepository
+import ir.iahrari.githubseeker.service.model.trending.TrendingDevelopers
+import ir.iahrari.githubseeker.service.model.trending.TrendingLang
+import ir.iahrari.githubseeker.service.model.trending.TrendingRepo
+import ir.iahrari.githubseeker.service.model.trending.TrendingSince
 import ir.iahrari.githubseeker.service.util.processResponseCode
 import kotlinx.coroutines.launch
 
-class MainFViewModel(context: Context): BaseViewModel(context) {
-    private val _reposList = MutableLiveData<List<Repo>>()
-    val reposList: LiveData<List<Repo>> get() = _reposList
+class MainFViewModel @ViewModelInject constructor(
+    @ApplicationContext context: Context,
+    private val repo: TrendingRepository
+): BaseViewModel(context, null) {
+    private val _reposList = MutableLiveData<List<TrendingRepo>>()
+    val reposList: LiveData<List<TrendingRepo>> get() = _reposList
+
+    private val _languageList = MutableLiveData<List<TrendingLang>>()
+    val languageList: LiveData<List<TrendingLang>> get() = _languageList
+
+    private val _devList = MutableLiveData<List<TrendingDevelopers>>()
+    val devList: LiveData<List<TrendingDevelopers>> get() = _devList
+
+    private var language: String? = null
+    var since: TrendingSince = TrendingSince.Daily
 
     init {
+        getLanguages()
         getRepos()
     }
 
-    private fun getRepos() {
+    fun setLanguage(position: Int){
+        language = languageList.value!![position].id
+    }
+
+
+    private fun getLanguages(){
         scope.launch {
             try {
-                _reposList.postValue(repository.getRepos(context.getToken()!!))
-            } catch (t: Throwable) {
-
-                if (t.cause?.message == "codeProblem")
+                _languageList.postValue(repo.getLanguages())
+            } catch (t: Throwable){
+                if (t.cause?.message == "codeProblem"){
                     context.processResponseCode(t.message!!.toInt())
-                else
+                    Log.i("RetrofitProblem", t.message.toString())
+                } else
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    class Factory(val context: Context): ViewModelProvider.Factory{
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MainFViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MainFViewModel(context) as T
+    private fun getDevelopers(){
+        scope.launch {
+            try {
+                _devList.postValue(repo.getTrendingDevelopers(language, since))
+            } catch (t: Throwable){
+                if (t.cause?.message == "codeProblem"){
+                    context.processResponseCode(t.message!!.toInt())
+                    Log.i("RetrofitProblem", t.message.toString())
+                } else
+                    Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
             }
-            throw IllegalArgumentException("Unable to construct ViewModel")
+        }
+    }
+
+    private fun getRepos() {
+        scope.launch {
+            try {
+                _reposList.postValue(repo.getTrendingRepos(language, since))
+            } catch (t: Throwable) {
+
+                if (t.cause?.message == "codeProblem"){
+                    context.processResponseCode(t.message!!.toInt())
+                    Log.i("RetrofitProblem", t.message.toString())
+                } else
+                    Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

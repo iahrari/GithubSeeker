@@ -9,8 +9,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_margin="4dp"
             tools:listitem="@layout/recycler_item"
             android:layout_width="match_parent"

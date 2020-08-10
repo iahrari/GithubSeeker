@@ -5,19 +5,11 @@ import ir.iahrari.githubseeker.service.model.AccessToken
 import ir.iahrari.githubseeker.service.model.Content
 import ir.iahrari.githubseeker.service.model.Repo
 import ir.iahrari.githubseeker.service.model.User
-import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-val client: RetrofitInterface = Retrofit.Builder()
-    .baseUrl(RetrofitInterface.baseURL)
-    .addConverterFactory(GsonConverterFactory.create())
-    .client(OkHttpClient.Builder().build()).build()
-    .create(RetrofitInterface::class.java)
-
+//@Singleton
 interface RetrofitInterface {
 
     companion object {
@@ -37,21 +29,21 @@ interface RetrofitInterface {
     }
 
     @GET("/user/repos")
-    suspend fun getReposAsync(@Header("Authorization") auth: String): Response<List<Repo>>
+    suspend fun getReposAsync(): Response<List<Repo>>
 
     @GET("/user")
-    suspend fun getUserDetail(@Header("Authorization") auth: String): Response<User>
+    suspend fun getUserDetail(): Response<User>
 
     @GET("/repos/{name}/{repo}/contents")
     suspend fun getSingleRepo(
-        @Header("Authorization") auth: String,
         @Path("name") name: String,
         @Path("repo") repo: String
     ): Response<List<Content>>
 
     @GET
-    suspend fun getContents(@Header("Authorization") auth: String, @Url url: String):
-            Response<List<Content>>
+    suspend fun getContents(
+        @Url url: String
+    ): Response<List<Content>>
 
     @Headers("Accept: application/json")
     @POST("https://github.com/login/oauth/access_token")
@@ -64,11 +56,10 @@ interface RetrofitInterface {
 
     @Headers("Accept: application/vnd.github.3.html")
     @GET
-    suspend fun getContentMarkUpView(@Header("Authorization") auth: String, @Url url: String):
-            Response<ResponseBody>
+    suspend fun getContentMarkUpView(
+        @Url url: String
+    ): Response<ResponseBody>
 
     @GET
-    suspend fun getContentJson(@Header("Authorization") auth: String, @Url url: String):
-            Response<Content>
-
+    suspend fun getContentJson(@Url url: String): Response<Content>
 }
