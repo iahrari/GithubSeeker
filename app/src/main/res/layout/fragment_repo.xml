@@ -41,26 +41,27 @@
 
                     <TextView
                             android:id="@+id/repo_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
+                            android:layout_marginHorizontal="8dp"
                             android:drawableStart="@{(safeUnbox(repo.private))? @drawable/ic_locked: null}"
                             android:text="@{repo.name}"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                            app:layout_constraintBottom_toTopOf="@+id/repo_language"
+                            android:textStyle="bold"
+                            android:gravity="start"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                             app:layout_constraintStart_toEndOf="@id/owner_avatar_logo"
-                            app:layout_constraintTop_toTopOf="@id/owner_avatar_logo" />
+                            app:layout_constraintTop_toTopOf="@id/owner_avatar_logo"
+                            app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
                             android:id="@+id/repo_language"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
+                            android:layout_marginHorizontal="8dp"
                             android:text="@{repo.language}"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                             app:layout_constraintBottom_toBottomOf="@id/owner_avatar_logo"
-                            app:layout_constraintStart_toEndOf="@id/owner_avatar_logo"
-                            app:layout_constraintTop_toBottomOf="@id/repo_name" />
+                            app:layout_constraintStart_toEndOf="@id/owner_avatar_logo" />
 
                     <TextView
                             android:id="@+id/repo_description"
