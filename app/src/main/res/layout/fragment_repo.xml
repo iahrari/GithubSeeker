@@ -6,6 +6,7 @@
     <data>
         <variable name="repo" type="ir.iahrari.githubseeker.service.model.Repo" />
         <import type="ir.iahrari.githubseeker.ui.util.SpannableUtil" />
+        <import type="ir.iahrari.githubseeker.service.util.EmojiMapUtil"/>
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -66,7 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:text="@{repo.description}"
+                            android:text="@{EmojiMapUtil.replaceCheatSheetEmojis(repo.description)}"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                             android:textIsSelectable="true"
                             app:layout_constraintEnd_toEndOf="parent"

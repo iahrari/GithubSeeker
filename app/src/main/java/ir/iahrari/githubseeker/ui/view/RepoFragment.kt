@@ -61,9 +61,8 @@ class RepoFragment : BasePermissionFragment() {
             Observer { adapter.submitList(it as MutableList) })
         viewModel.gRepo.observe(viewLifecycleOwner,
             Observer {
-                binding.repo = it
                 repo = it
-                Log.i("description", repo.description?: "")
+                binding.repo = repo
             })
 
         binding.repo = repo
