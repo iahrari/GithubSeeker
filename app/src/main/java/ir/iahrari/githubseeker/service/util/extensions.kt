@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Environment
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.RetrofitInterface
 
@@ -36,6 +37,11 @@ fun ImageView.setLanguageLogo(language: String?){
         )
     else
         this.setImageResource(android.R.drawable.stat_notify_error)
+}
+
+fun ImageView.setImageWithURL(url: String?){
+    if (url != null)
+        Glide.with(this).load(url).circleCrop().into(this)
 }
 
 fun Uri.downloadFromUri(context: Context, name: String, path: String) {

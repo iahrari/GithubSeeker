@@ -25,6 +25,7 @@ import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.databinding.ActivityMainBinding
 import ir.iahrari.githubseeker.databinding.NavigationHeaderBinding
 import ir.iahrari.githubseeker.service.model.User
+import ir.iahrari.githubseeker.service.util.setImageWithURL
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -117,9 +118,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpUserView(user: User?) {
         headerBinding.user = user
-
-        if (user!!.avatar != null)
-            Glide.with(this).load(user.avatar).circleCrop().into(headerBinding.avatar)
+        headerBinding.avatar.setImageWithURL(user?.avatar)
+//        if (user!!.avatar != null)
+//            Glide.with(this).load(user.avatar).circleCrop().into(headerBinding.avatar)
 
 //        else if (user.gravatar != null)
 //            Glide.with(this).load(user.gravatar).into(headerBinding.avatar)

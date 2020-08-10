@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.databinding.FragmentRepoBinding
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Repo
+import ir.iahrari.githubseeker.service.util.setImageWithURL
 import ir.iahrari.githubseeker.service.util.setLanguageLogo
 import ir.iahrari.githubseeker.ui.adapter.ContentListAdapter
 import ir.iahrari.githubseeker.ui.util.MiddleDividerItemDecoration
@@ -66,6 +67,6 @@ class RepoFragment : BasePermissionFragment() {
             })
 
         binding.repo = repo
-        binding.repoLangLogo.setLanguageLogo(repo.language)
+        binding.ownerAvatarLogo.setImageWithURL(repo.owner!!.avatar)
     }
 }

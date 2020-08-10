@@ -31,7 +31,7 @@
 
                     <!--TODO: Repair ContentDescription-->
                     <ImageView
-                            android:id="@+id/repo_lang_logo"
+                            android:id="@+id/owner_avatar_logo"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_margin="8dp"
@@ -48,8 +48,8 @@
                             android:text="@{repo.name}"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                             app:layout_constraintBottom_toTopOf="@+id/repo_language"
-                            app:layout_constraintStart_toEndOf="@id/repo_lang_logo"
-                            app:layout_constraintTop_toTopOf="@id/repo_lang_logo" />
+                            app:layout_constraintStart_toEndOf="@id/owner_avatar_logo"
+                            app:layout_constraintTop_toTopOf="@id/owner_avatar_logo" />
 
                     <TextView
                             android:id="@+id/repo_language"
@@ -58,8 +58,8 @@
                             android:layout_margin="4dp"
                             android:text="@{repo.language}"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                            app:layout_constraintBottom_toBottomOf="@id/repo_lang_logo"
-                            app:layout_constraintStart_toEndOf="@id/repo_lang_logo"
+                            app:layout_constraintBottom_toBottomOf="@id/owner_avatar_logo"
+                            app:layout_constraintStart_toEndOf="@id/owner_avatar_logo"
                             app:layout_constraintTop_toBottomOf="@id/repo_name" />
 
                     <TextView
@@ -72,7 +72,7 @@
                             android:textIsSelectable="true"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/repo_lang_logo" />
+                            app:layout_constraintTop_toBottomOf="@id/owner_avatar_logo" />
 
                     <TextView
                             android:id="@+id/repo_owner"
