@@ -35,10 +35,16 @@ interface RetrofitInterface {
     suspend fun getUserDetail(): Response<User>
 
     @GET("/repos/{name}/{repo}/contents")
-    suspend fun getSingleRepo(
+    suspend fun getSingleRepoContents(
         @Path("name") name: String,
         @Path("repo") repo: String
     ): Response<List<Content>>
+
+    @GET("/repos/{name}/{repo}")
+    suspend fun getRepo(
+        @Path("name") name: String,
+        @Path("repo") repo: String
+    ): Response<Repo>
 
     @GET
     suspend fun getContents(

@@ -19,16 +19,38 @@ class RepoFViewModel @ViewModelInject constructor(
     private val _contentsList = MutableLiveData<List<Content>>()
     val contentsList: LiveData<List<Content>> get() = _contentsList
 
+    private val _gRepo = MutableLiveData<Repo>()
+    val gRepo: LiveData<Repo> get() = _gRepo
+
+    private lateinit var repo: Repo
+
     fun setRepo(repo: Repo) {
+        this.repo = repo
         scope.launch {
-            try {
-                _contentsList.postValue(repository!!.getSingleRepo(repo.path!!))
-            } catch (t: Throwable) {
-                if (t.cause?.message == "codeProblem")
-                    context.processResponseCode(t.message!!.toInt())
-                else
-                    Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
-            }
+            getRepoContents()
+            getRepo()
+        }
+    }
+
+    private suspend fun getRepoContents(){
+        try {
+            _contentsList.postValue(repository!!.getSingleRepoContents(repo.path!!))
+        } catch (t: Throwable) {
+            if (t.cause?.message == "codeProblem")
+                context.processResponseCode(t.message!!.toInt())
+            else
+                Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private suspend fun getRepo(){
+        try {
+            _gRepo.postValue(repository!!.getRepo(repo.path!!))
+        } catch (t: Throwable) {
+            if (t.cause?.message == "codeProblem")
+                context.processResponseCode(t.message!!.toInt())
+            else
+                Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
         }
     }
 }

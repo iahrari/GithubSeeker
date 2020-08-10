@@ -15,13 +15,21 @@ class Repository @Inject constructor(private val client: RetrofitInterface){
             throw Throwable(response.code().toString(), Throwable("codeProblem"))
     }
 
-    suspend fun getSingleRepo(path: String): List<Content>? {
-        val name = path.split("/")
-        val response = client.getSingleRepo(name[0], name[1])
+    suspend fun getSingleRepoContents(path: String): List<Content>? {
+        val p = path.split("/")
+        val response = client.getSingleRepoContents(p[0], p[1])
         if (response.isSuccessful)
             return response.body()
         else
             throw Throwable(response.code().toString(), Throwable("codeProblem"))
+    }
+
+    suspend fun getRepo(path: String): Repo?{
+        val p = path.split("/")
+        val response = client.getRepo(p[0], p[1])
+        if(response.isSuccessful)
+            return response.body()
+        else throw Throwable(response.code().toString(), Throwable("codeProblem"))
     }
 
     suspend fun getRepos(): List<Repo> {
@@ -33,8 +41,7 @@ class Repository @Inject constructor(private val client: RetrofitInterface){
             throw Throwable(response.body().toString(), Throwable("codeProblem"))
     }
 
-    suspend fun getContents(
-        url: String): List<Content> {
+    suspend fun getContents(url: String): List<Content> {
         val response = client.getContents(url)
         if (response.isSuccessful)
             return response.body()!!
