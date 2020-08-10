@@ -9,7 +9,7 @@ import kotlinx.coroutines.Job
 
 abstract class BaseViewModel (
     protected val context: Context,
-    protected val repository: Repository
+    protected val repository: Repository?
 ): ViewModel() {
     private val job = Job()
     protected val scope = CoroutineScope(Dispatchers.Main + job)

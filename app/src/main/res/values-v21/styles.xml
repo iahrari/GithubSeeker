@@ -11,6 +11,8 @@
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <item name="android:navigationBarColor">@color/primaryDarkColor</item>
+        <item name="android:colorControlHighlight">@color/titleColor</item>
+        <item name="colorControlHighlight">@color/titleColor</item>
 
     </style>
 </resources>

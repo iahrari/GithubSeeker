@@ -8,6 +8,7 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import ir.iahrari.githubseeker.service.RetrofitInterface
+import ir.iahrari.githubseeker.service.TrendingServiceInterface
 import ir.iahrari.githubseeker.service.interceptor.ApiVersion
 import ir.iahrari.githubseeker.service.interceptor.Auth
 import ir.iahrari.githubseeker.service.util.getToken
@@ -34,5 +35,14 @@ object DIModule {
         .client(ok.build()).build()
 
         return retrofit.create(RetrofitInterface::class.java)
+    }
+
+    @Provides
+    @ActivityRetainedScoped
+    fun provideTrendingClient(): TrendingServiceInterface{
+        return Retrofit.Builder()
+            .baseUrl(TrendingServiceInterface.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(TrendingServiceInterface::class.java)
     }
 }

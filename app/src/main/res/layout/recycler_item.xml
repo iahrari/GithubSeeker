@@ -1,56 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <variable name="repo" type="ir.iahrari.githubseeker.service.model.Repo"/>
+
+        <variable
+                name="repo"
+                type="ir.iahrari.githubseeker.service.model.Repo" />
     </data>
-    <LinearLayout
-            android:background="?attr/selectableItemBackground"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginVertical="8dp"
             android:clickable="true"
             android:focusable="true"
-            android:layout_margin="4dp"
             android:orientation="vertical"
             android:padding="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <ImageView
-                android:contentDescription="@string/repo_lang_logo_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/repo_lang_logo"
-                tools:src="@drawable/ic_kotlin"
-                android:layout_margin="4dp"/>
+            tools:background="@color/primaryDarkColor">
 
         <TextView
+                android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/repo_name"
+                android:layout_margin="4dp"
                 android:drawableStart="@{(safeUnbox(repo.private))? @drawable/ic_locked: null}"
-                android:text="@{repo.name}"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="@color/titleColor"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                tools:text="Knights Tour"/>
+                android:text="@{repo.owner.username + '/'}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="iahrai/" />
 
         <TextView
+                android:id="@+id/repo_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{repo.name}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/author"
+                app:layout_constraintEnd_toStartOf="@id/trend_stars"
+                app:layout_constraintStart_toEndOf="@+id/author"
+                tools:text="Knights Tour" />
+
+        <TextView
+                android:id="@+id/repo_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{repo.description}"
+                android:textColor="@color/primaryTextColor"
+                app:layout_constraintEnd_toStartOf="@+id/trend_stars"
+                app:layout_constraintStart_toStartOf="@+id/author"
+                app:layout_constraintTop_toBottomOf="@+id/author"
+                tools:text="This Project is Based On WarensDorf's rule" />
+
+        <TextView
+                android:id="@+id/repo_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{repo.language}"
-                android:id="@+id/repo_language"
-                android:textColor="@color/titleColor"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                tools:text="Kotlin"/>
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/repo_forks"
+                app:layout_constraintStart_toStartOf="@id/repo_description"
+                tools:text="Kotlin" />
 
         <TextView
+                android:id="@+id/repo_forks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/repo_description"
-                android:text="@{repo.description}"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/titleColor"
-                tools:text="This Project is Based On WarensDorf's rule"/>
-    </LinearLayout>
-</layout>
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:drawableStart="@drawable/ic_fork"
+                android:drawablePadding="2dp"
+                android:text="@{Integer.toString(repo.forks)}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/repo_language"
+                app:layout_constraintTop_toBottomOf="@id/repo_description"
+                tools:text="34" />
+
+        <!--        <LinearLayout-->
+        <!--                android:id="@+id/trend_stars"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_margin="8dp"-->
+        <!--                android:padding="8dp"-->
+        <!--                android:background="@drawable/stars_background"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent">-->
+
+        <TextView
+                android:id="@+id/trend_stars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/stars_ripple"
+                android:drawableEnd="@drawable/ic_star_empty"
+                android:drawablePadding="4dp"
+                android:text="@{Integer.toString(repo.stars)}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="344" />
+
+        <!--                    <ImageView-->
+        <!--                            android:layout_width="wrap_content"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_gravity="center_vertical"-->
+        <!--                            android:contentDescription="@string/star_this_repository"-->
+        <!--                            android:layout_margin="4dp"-->
+        <!--                            app:srcCompat="@drawable/ic_star_empty"/>-->
+
+
+<!--    </LinearLayout>-->
+</androidx.constraintlayout.widget.ConstraintLayout></layout>

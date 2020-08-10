@@ -23,7 +23,7 @@ class FilesFViewModel @ViewModelInject constructor(
     fun setUrl(url: String) {
         scope.launch {
             try {
-                _contentsList.postValue(repository.getContents(url))
+                _contentsList.postValue(repository!!.getContents(url))
             } catch (t: Throwable) {
                 if (t.cause?.message == "codeProblem")
                     context.processResponseCode(t.message!!.toInt())

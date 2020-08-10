@@ -22,7 +22,7 @@ class RepoFViewModel @ViewModelInject constructor(
     fun setRepo(repo: Repo) {
         scope.launch {
             try {
-                _contentsList.postValue(repository.getSingleRepo(repo.path!!))
+                _contentsList.postValue(repository!!.getSingleRepo(repo.path!!))
             } catch (t: Throwable) {
                 if (t.cause?.message == "codeProblem")
                     context.processResponseCode(t.message!!.toInt())

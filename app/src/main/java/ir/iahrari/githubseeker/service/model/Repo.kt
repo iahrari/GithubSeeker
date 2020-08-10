@@ -21,7 +21,8 @@ data class Repo(
     val forks: Int?,
     val watchers: Int?,
     @SerializedName("fork") val isForked: Boolean?,
-    @SerializedName("open_issues") val openIssues: Int?
+    @SerializedName("open_issues") val openIssues: Int?,
+    @SerializedName("stargazers_count") val stars: Int
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -40,6 +41,7 @@ data class Repo(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
+        parcel.readInt(),
         parcel.readInt()
     )
 

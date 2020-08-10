@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Repo
+import ir.iahrari.githubseeker.service.model.trending.TrendingRepo
 import ir.iahrari.githubseeker.ui.adapter.ListAdapter
 import ir.iahrari.githubseeker.ui.util.MiddleDividerItemDecoration
 import ir.iahrari.githubseeker.viewmodel.MainFViewModel
@@ -40,17 +41,17 @@ class MainFragment : Fragment(), MainActivity.OnDrawerMenuItemClicked {
         activity?.findViewById<TextView>(R.id.header_title)?.text = context?.getString(
             R.string.github_seeker
         )
-        recycler.addItemDecoration(
-            MiddleDividerItemDecoration(
-                requireContext(),
-                MiddleDividerItemDecoration.ALL,
-                0
-            )
-        )
+//        recycler.addItemDecoration(
+//            MiddleDividerItemDecoration(
+//                requireContext(),
+//                MiddleDividerItemDecoration.ALL,
+//                0
+//            )
+//        )
 
         adapter = ListAdapter()
         recycler.adapter = adapter
 
-        viewModel.reposList.observe(viewLifecycleOwner, Observer<List<Repo>> { adapter.submitList(it) })
+        viewModel.reposList.observe(viewLifecycleOwner, Observer<List<TrendingRepo>> { adapter.submitList(it) })
     }
 }
