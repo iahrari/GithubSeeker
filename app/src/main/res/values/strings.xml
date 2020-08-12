@@ -22,4 +22,5 @@
     <string name="star_this_repository">Star this repository</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+    <string name="trends">Trends</string>
 </resources>

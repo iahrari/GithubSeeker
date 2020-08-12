@@ -9,7 +9,7 @@ import android.text.TextUtils;
 
 
 public final class EmojiMapUtil {
-
+//https://github.com/xintao222/androidemojimap
     public static String replaceCheatSheetEmojis(String s) {
         if (TextUtils.isEmpty(s)) {
             return "";
