@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/primaryDarkColor"
+            android:id="@+id/bottom_sheet_layout"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            tools:showIn="@layout/activity_main">
+        <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="0dp"
+                android:layout_width="match_parent"
+                app:cardBackgroundColor="@color/primaryDarkColor"
+                android:layout_height="?attr/actionBarSize">
+                <TextView
+                        android:layout_marginStart="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="8dp"
+                        android:id="@+id/sheet_title"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/primaryTextColor"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        tools:text="@string/filter"
+                        app:drawableStartCompat="@drawable/ic_filter" />
+        </com.google.android.material.card.MaterialCardView>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sheet_content_container"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

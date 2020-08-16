@@ -41,7 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/app_bar"
-                tools:openDrawer="start"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:fitsSystemWindows="false">
 
@@ -50,9 +49,8 @@
                     android:layout_height="match_parent"
                     android:background="@color/primaryBackground"
                     android:orientation="vertical">
-
-
                 <fragment
+                        app:layout_behavior=".ui.util.ExtendedFabBehavior"
                         android:id="@+id/nav_host_fragment"
                         android:name="androidx.navigation.fragment.NavHostFragment"
                         android:layout_width="match_parent"
@@ -60,7 +58,6 @@
                         app:defaultNavHost="true"
                         app:navGraph="@navigation/nav_main" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-<!--#34434A-->
             <com.google.android.material.navigation.NavigationView
                     android:id="@+id/navigation"
                     android:layout_width="wrap_content"
@@ -72,5 +69,16 @@
                     app:menu="@menu/drawer_menu"
                     tools:headerLayout="@layout/navigation_header" />
         </androidx.drawerlayout.widget.DrawerLayout>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_filter"
+                android:id="@+id/floating_button"
+                app:layout_behavior=".ui.util.ExtendedFabBehavior"
+                app:layout_anchor="@+id/drawer_layout"
+                app:layout_anchorGravity="bottom|end"
+                android:layout_margin="16dp"
+                android:text="@string/filter"/>
+        <include layout="@layout/bottom_sheet_layout" android:id="@+id/bottom_sheet"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

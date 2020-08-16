@@ -38,13 +38,16 @@ class MainFViewModel @ViewModelInject constructor(
 
     fun setLanguage(position: Int){
         language = languageList.value!![position].id
+        Log.i("Language", languageList.value!![position].string())
     }
 
 
     private fun getLanguages(){
         scope.launch {
             try {
-                _languageList.postValue(repo.getLanguages())
+                _languageList.postValue((repo.getLanguages() as MutableList).apply {
+                    add(0, TrendingLang("", "All"))
+                })
             } catch (t: Throwable){
                 if (t.cause?.message == "codeProblem"){
                     context.processResponseCode(t.message!!.toInt())
@@ -55,7 +58,7 @@ class MainFViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getDevelopers(){
+    fun retrieveDevelopers(){
         scope.launch {
             try {
                 _devList.postValue(repo.getTrendingDevelopers(language, since))
@@ -69,7 +72,7 @@ class MainFViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getRepos() {
+    fun getRepos() {
         scope.launch {
             try {
                 _reposList.postValue(repo.getTrendingRepos(language, since))

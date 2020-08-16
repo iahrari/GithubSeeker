@@ -1,6 +1,7 @@
 package ir.iahrari.githubseeker.ui.adapter
 
 import android.text.method.LinkMovementMethod
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 

@@ -23,4 +23,22 @@
     <string name="following">Following</string>
     <string name="followers">Followers</string>
     <string name="trends">Trends</string>
+    <string name="filter">Filter</string>
+    <string name="trends_type">Trends type:</string>
+    <string name="language">Language:</string>
+    <string name="since">Since:</string>
+    <string name="done">Done</string>
+    <string name="avatar_content_description">\'s avatar</string>
+    <string name="follow">Follow!</string>
+
+    <array name="since_values">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </array>
+
+    <string-array name="trends_values">
+        <item>Repositories</item>
+        <item>Developers</item>
+    </string-array>
 </resources>
