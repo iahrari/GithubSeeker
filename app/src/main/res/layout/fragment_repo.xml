@@ -96,39 +96,39 @@
                             app:layout_constraintTop_toBottomOf="@+id/repo_owner"
                             app:setMovement="@{true}" />
 
-                    <TextView
-                            android:id="@+id/repo_clone_url"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="@{SpannableUtil.makeSpannableText(@string/clone_url + ' ', repo.cloneURL)}"
-                            android:textIsSelectable="true"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/repo_html_url"
-                            app:setMovement="@{true}" />
+<!--                    <TextView-->
+<!--                            android:id="@+id/repo_clone_url"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="4dp"-->
+<!--                            android:text="@{SpannableUtil.makeSpannableText(@string/clone_url + ' ', repo.cloneURL)}"-->
+<!--                            android:textIsSelectable="true"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/repo_html_url"-->
+<!--                            app:setMovement="@{true}" />-->
 
 
-                    <TextView
-                            android:id="@+id/repo_git_url"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="@{SpannableUtil.makeClickableText(@string/git_url + ' ', repo.gitURl)}"
-                            android:textIsSelectable="true"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/repo_clone_url"
-                            app:setMovement="@{true}" />
+<!--                    <TextView-->
+<!--                            android:id="@+id/repo_git_url"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="4dp"-->
+<!--                            android:text="@{SpannableUtil.makeClickableText(@string/git_url + ' ', repo.gitURl)}"-->
+<!--                            android:textIsSelectable="true"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/repo_clone_url"-->
+<!--                            app:setMovement="@{true}" />-->
 
-                    <TextView
-                            android:id="@+id/repo_ssh_url"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
-                            android:text="@{SpannableUtil.makeClickableText(@string/ssh_url + ' ', repo.sshURL)}"
-                            android:textIsSelectable="true"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/repo_git_url"
-                            app:setMovement="@{true}" />
+<!--                    <TextView-->
+<!--                            android:id="@+id/repo_ssh_url"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="4dp"-->
+<!--                            android:text="@{SpannableUtil.makeClickableText(@string/ssh_url + ' ', repo.sshURL)}"-->
+<!--                            android:textIsSelectable="true"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/repo_git_url"-->
+<!--                            app:setMovement="@{true}" />-->
 
                     <TextView
                             android:id="@+id/repo_size"
@@ -140,7 +140,7 @@
                             android:text="@{@string/contains + ' ' + repo.size + ' ' + @string/files}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/repo_ssh_url" />
+                            app:layout_constraintTop_toBottomOf="@+id/repo_html_url" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
