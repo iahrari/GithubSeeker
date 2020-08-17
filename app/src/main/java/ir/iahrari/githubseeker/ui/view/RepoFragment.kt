@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.databinding.FragmentRepoBinding
@@ -22,7 +22,7 @@ import ir.iahrari.githubseeker.viewmodel.RepoFViewModel
 import kotlinx.android.synthetic.main.fragment_repo.*
 
 @AndroidEntryPoint
-class RepoFragment : BasePermissionFragment() {
+class RepoFragment : FilesListBaseFragment() {
     private lateinit var repo: Repo
     private lateinit var adapter: ContentListAdapter
     private lateinit var binding: FragmentRepoBinding
@@ -32,11 +32,15 @@ class RepoFragment : BasePermissionFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-            R.layout.fragment_repo, container, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.fragment_repo, container, false
+        )
+        this.container = container
         val args by navArgs<RepoFragmentArgs>()
         repo = args.repo
-        Log.i("description", repo.description?: "")
+        Log.i("description", repo.description ?: "")
+        readmeViewModel = viewModel
         viewModel.setRepo(repo)
         activity?.findViewById<TextView>(R.id.header_title)?.text = repo.name
 
@@ -57,13 +61,14 @@ class RepoFragment : BasePermissionFragment() {
         )
 
         content_recycler.adapter = adapter
-        viewModel.contentsList.observe(viewLifecycleOwner,
-            Observer { adapter.submitList(it as MutableList) })
-        viewModel.gRepo.observe(viewLifecycleOwner,
-            Observer {
-                repo = it
-                binding.repo = repo
-            })
+        viewModel.contentsList.observe(viewLifecycleOwner) {
+            adapter.submitList(it as MutableList)
+        }
+
+        viewModel.gRepo.observe(viewLifecycleOwner) {
+            repo = it
+            binding.repo = repo
+        }
 
         binding.repo = repo
         binding.ownerAvatarLogo.setImageWithURL(repo.owner!!.avatar)

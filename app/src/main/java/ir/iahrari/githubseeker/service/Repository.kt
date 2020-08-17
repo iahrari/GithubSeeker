@@ -48,4 +48,13 @@ class Repository @Inject constructor(private val client: RetrofitInterface){
         else
             throw Throwable(response.body().toString(), Throwable("codeProblem"))
     }
+
+    suspend fun getReadme(url: String): String{
+        val response = client.getContentMarkUpView(url)
+        if (response.isSuccessful)
+            return response.body()!!.string()
+
+        else
+            throw Throwable(response.body().toString(), Throwable("codeProblem"))
+    }
 }

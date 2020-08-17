@@ -30,6 +30,7 @@
     <string name="done">Done</string>
     <string name="avatar_content_description">\'s avatar</string>
     <string name="follow">Follow!</string>
+    <string name="readme">README</string>
 
     <array name="since_values">
         <item>Daily</item>

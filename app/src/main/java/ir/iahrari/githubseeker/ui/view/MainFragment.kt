@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import dagger.hilt.android.AndroidEntryPoint
 import ir.iahrari.githubseeker.R

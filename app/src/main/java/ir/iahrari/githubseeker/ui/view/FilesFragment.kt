@@ -17,7 +17,7 @@ import ir.iahrari.githubseeker.viewmodel.FilesFViewModel
 import kotlinx.android.synthetic.main.fragment_files.*
 
 @AndroidEntryPoint
-class FilesFragment : BasePermissionFragment() {
+class FilesFragment : FilesListBaseFragment() {
     private lateinit var adapter: ContentListAdapter
     private lateinit var url: String
     private val viewModel: FilesFViewModel by viewModels()
@@ -29,6 +29,8 @@ class FilesFragment : BasePermissionFragment() {
         val args by navArgs<FilesFragmentArgs>()
         activity?.findViewById<TextView>(R.id.header_title)?.text = args.title
         url = args.path
+        readmeViewModel = viewModel
+        this.container = container
         viewModel.setUrl(url)
         return inflater.inflate(R.layout.fragment_files, container, false)
     }

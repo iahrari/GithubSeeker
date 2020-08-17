@@ -7,10 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -21,11 +19,11 @@ import ir.iahrari.githubseeker.R
 import ir.iahrari.githubseeker.service.model.Content
 import ir.iahrari.githubseeker.service.util.REQUEST_WRITE_EXTERNAL
 import ir.iahrari.githubseeker.service.util.downloadFromUri
-import ir.iahrari.githubseeker.ui.view.BasePermissionFragment
+import ir.iahrari.githubseeker.ui.view.FilesListBaseFragment
 import ir.iahrari.githubseeker.ui.view.FilesFragmentDirections
 import ir.iahrari.githubseeker.ui.view.RepoFragmentDirections
 
-class ContentListAdapter(private val fragment: BasePermissionFragment, private val isRepo: Boolean) :
+class ContentListAdapter(private val fragment: FilesListBaseFragment, private val isRepo: Boolean) :
     ListAdapter<Content, ContentListAdapter.CLAHolder>(
         MDiffUtil()
     ) {
@@ -38,6 +36,7 @@ class ContentListAdapter(private val fragment: BasePermissionFragment, private v
         )
 
     //Override submitList to sort list when submitting lists
+    @SuppressLint("DefaultLocale")
     override fun submitList(list: MutableList<Content>?) {
         list!!.sortWith(
             Comparator { o1, o2 ->
@@ -52,6 +51,13 @@ class ContentListAdapter(private val fragment: BasePermissionFragment, private v
             }
         )
 
+        for(l in list){
+            if(l.name.toLowerCase() == "readme.md"){
+                fragment.onExistenceOfReadme(l)
+                break
+            }
+        }
+
         super.submitList(list)
     }
 
@@ -60,7 +66,7 @@ class ContentListAdapter(private val fragment: BasePermissionFragment, private v
         holder.bindView(getItem(position))
     }
 
-    class CLAHolder(private val fragment: BasePermissionFragment, private val binding: ContentItemBinding, private val isRepo: Boolean) :
+    class CLAHolder(private val fragment: FilesListBaseFragment, private val binding: ContentItemBinding, private val isRepo: Boolean) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(data: Content) {
@@ -122,7 +128,7 @@ class ContentListAdapter(private val fragment: BasePermissionFragment, private v
         }
 
         companion object {
-            fun from(fragment: BasePermissionFragment, parent: ViewGroup, layout: Int, isRepo: Boolean): CLAHolder =
+            fun from(fragment: FilesListBaseFragment, parent: ViewGroup, layout: Int, isRepo: Boolean): CLAHolder =
                 CLAHolder(
                     fragment,
                     DataBindingUtil.inflate(
@@ -144,5 +150,9 @@ class ContentListAdapter(private val fragment: BasePermissionFragment, private v
         override fun areContentsTheSame(p0: Content, p1: Content): Boolean {
             return p0 == p1
         }
+    }
+
+    interface OnExistenceOfReadme{
+        fun onExistenceOfReadme(content: Content)
     }
 }

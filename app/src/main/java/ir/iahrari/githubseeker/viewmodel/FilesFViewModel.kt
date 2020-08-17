@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class FilesFViewModel @ViewModelInject constructor(
     @ApplicationContext context: Context,
     repository: Repository
-): BaseViewModel(context, repository) {
+): BaseViewModel(context, repository), RetrieveReadme {
 
     private val _contentsList = MutableLiveData<List<Content>>()
     val contentsList: LiveData<List<Content>> get() = _contentsList
@@ -33,4 +33,8 @@ class FilesFViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    override fun getReadme(content: Content): LiveData<String?> =
+        retrieveReadme(scope, content, repository!!)
+
 }

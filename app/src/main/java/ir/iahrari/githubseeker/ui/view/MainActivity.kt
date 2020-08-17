@@ -163,8 +163,10 @@ class MainActivity : AppCompatActivity() {
         binding.floatingButton.setText(title)
     }
 
-    fun setSheetTitleDrawable(title: Int?){
-        //Todo: Implement this method
+    fun setSheetTitleDrawable(title: Int){
+        binding.bottomSheet.sheetTitle.setCompoundDrawablesWithIntrinsicBounds(
+            title, 0, 0, 0
+        )
     }
 
     fun setSheetContent(c: View){
