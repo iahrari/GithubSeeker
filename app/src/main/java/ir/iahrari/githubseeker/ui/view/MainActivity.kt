@@ -1,6 +1,5 @@
 package ir.iahrari.githubseeker.ui.view
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +8,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -70,6 +68,12 @@ class MainActivity : AppCompatActivity() {
                 binding.drawerLayout
             ) || super.onSupportNavigateUp()
         }
+    }
+
+    override fun onBackPressed() {
+        if(bottomSheet.state == BottomSheetBehavior.STATE_EXPANDED)
+            bottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+        else super.onBackPressed()
     }
 
     private fun setupNavigation() {
@@ -159,6 +163,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setBottomSheetVisibility(visibility: Int) {
+        binding.bottomSheet.sheetContentContainer.removeAllViewsInLayout()
         binding.bottomSheet.root.visibility = visibility
         binding.floatingButton.visibility = visibility
     }
