@@ -11,4 +11,10 @@ object BindingAdapters {
     fun setMovementMethod(view: TextView, isEnabled: Boolean) {
         view.movementMethod = if (isEnabled) LinkMovementMethod.getInstance() else null
     }
+
+    @JvmStatic
+    @BindingAdapter("app:setSelected")
+    fun setSelected(view: TextView, isEnabled: Boolean){
+        view.isSelected = isEnabled
+    }
 }
