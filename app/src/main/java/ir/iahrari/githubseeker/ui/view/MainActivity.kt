@@ -1,5 +1,6 @@
 package ir.iahrari.githubseeker.ui.view
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -61,7 +64,8 @@ class MainActivity : AppCompatActivity() {
                     navController,
                     binding.drawerLayout
                 ) || super.onSupportNavigateUp()
-            } else -> navigateUp(
+            }
+            else -> navigateUp(
                 navController,
                 binding.drawerLayout
             ) || super.onSupportNavigateUp()
@@ -97,7 +101,8 @@ class MainActivity : AppCompatActivity() {
                 "fragment_main" -> {
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     setBottomSheetVisibility(View.VISIBLE)
-                } else -> {
+                }
+                else -> {
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     binding.bottomSheet.sheetContentContainer.removeAllViewsInLayout()
                     setBottomSheetVisibility(View.GONE)
@@ -111,11 +116,11 @@ class MainActivity : AppCompatActivity() {
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 (binding.toolbar.navigationIcon as DrawerArrowDrawable).progress = slideOffset
-                if(slideOffset > 0 && bottomSheet.state != BottomSheetBehavior.STATE_COLLAPSED){
+                if (slideOffset > 0 && bottomSheet.state != BottomSheetBehavior.STATE_COLLAPSED) {
                     bottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
-                if(slideOffset == 0f) binding.floatingButton.show()
+                if (slideOffset == 0f) binding.floatingButton.show()
                 else binding.floatingButton.hide()
             }
         })
@@ -131,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        bottomSheet.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+        bottomSheet.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -153,27 +158,28 @@ class MainActivity : AppCompatActivity() {
         drawerListenerItem = listener
     }
 
-    fun setBottomSheetVisibility(visibility: Int){
+    fun setBottomSheetVisibility(visibility: Int) {
         binding.bottomSheet.root.visibility = visibility
         binding.floatingButton.visibility = visibility
     }
 
-    fun setSheetTitle(title: Int){
+    fun setSheetTitle(title: Int) {
         binding.bottomSheet.sheetTitle.setText(title)
         binding.floatingButton.setText(title)
     }
 
-    fun setSheetTitleDrawable(title: Int){
+    fun setSheetTitleDrawable(title: Int) {
+        binding.floatingButton.icon = ContextCompat.getDrawable(this, title)
         binding.bottomSheet.sheetTitle.setCompoundDrawablesWithIntrinsicBounds(
             title, 0, 0, 0
         )
     }
 
-    fun setSheetContent(c: View){
+    fun setSheetContent(c: View) {
         binding.bottomSheet.sheetContentContainer.addView(c)
     }
 
-    fun closeSheet(){
+    fun closeSheet() {
         bottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
